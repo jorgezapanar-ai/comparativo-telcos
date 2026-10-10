@@ -1,0 +1,312 @@
+{
+  "comentario": "Única fuente de verdad del panel de equipos en plan renovación (Claro, Movistar, Entel). El motor (scripts/actualizar.mjs) y el panel (index.html) leen todo desde aquí: moneda, tramos, segmentos (marca), fuentes con su adaptador, política de entrega y textos. No edites los otros archivos.",
+  "industria": "Telefonía móvil · equipos en plan renovación postpago",
+  "mercado": "Perú",
+  "version": "1.0",
+  "versionFecha": "2026-10-10",
+  "tramoSegAlto": 3000,
+  "apiFx": "https://open.er-api.com/v6/latest/",
+  "empresa": {
+    "nombre": "Nuestra tienda",
+    "rol": "Referencia",
+    "url": "",
+    "logoDataUri": ""
+  },
+  "tiendaPropiaId": "ninguna",
+  "monedaLocal": {
+    "codigo": "PEN",
+    "simbolo": "S/",
+    "nombre": "soles",
+    "locale": "es-PE",
+    "zona": "America/Lima"
+  },
+  "monedaExtranjera": {
+    "codigo": "USD",
+    "simbolo": "US$",
+    "nombre": "dólares",
+    "nombreUnidad": "dólar"
+  },
+  "segmentos": [
+    { "id": "apple", "etiqueta": "Apple", "patrones": ["apple", "iphone"] },
+    { "id": "samsung", "etiqueta": "Samsung", "patrones": ["samsung", "galaxy"] },
+    { "id": "xiaomi", "etiqueta": "Xiaomi", "patrones": ["xiaomi", "redmi", "poco"] },
+    { "id": "motorola", "etiqueta": "Motorola", "patrones": ["motorola", "moto "] },
+    { "id": "honor", "etiqueta": "Honor", "patrones": ["honor"] },
+    { "id": "oppo", "etiqueta": "Oppo", "patrones": ["oppo"] },
+    { "id": "vivo", "etiqueta": "Vivo", "patrones": ["vivo"] },
+    { "id": "realme", "etiqueta": "Realme", "patrones": ["realme"] },
+    { "id": "huawei", "etiqueta": "Huawei", "patrones": ["huawei"] },
+    { "id": "zte", "etiqueta": "ZTE", "patrones": ["zte"] },
+    { "id": "nokia", "etiqueta": "Nokia", "patrones": ["nokia"] },
+    { "id": "tcl", "etiqueta": "TCL / Alcatel", "patrones": ["tcl", "alcatel"] },
+    { "id": "infinix", "etiqueta": "Infinix", "patrones": ["infinix"] },
+    { "id": "tecno", "etiqueta": "Tecno", "patrones": ["tecno"] },
+    { "id": "google", "etiqueta": "Google", "patrones": ["google", "pixel"] },
+    { "id": "logic", "etiqueta": "Logic", "patrones": ["logic"] },
+    { "id": "asus", "etiqueta": "Asus", "patrones": ["asus", "rog"] }
+  ],
+  "tramos": [
+    { "id": "0-500", "etq": "< S/ 500", "min": 0, "max": 500, "color": "#6b4a2b" },
+    { "id": "500-1000", "etq": "S/ 500–999", "min": 500, "max": 1000, "color": "#7a5c38" },
+    { "id": "1000-2000", "etq": "S/ 1,000–1,999", "min": 1000, "max": 2000, "color": "#5c564c" },
+    { "id": "2000-3000", "etq": "S/ 2,000–2,999", "min": 2000, "max": 3000, "color": "#3f3b34" },
+    { "id": "3000-max", "etq": "S/ 3,000 o más", "min": 3000, "max": null, "color": "#1d1d1b" }
+  ],
+  "fuentes": [
+    {
+      "id": "claro",
+      "nombre": "Claro",
+      "rol": "competencia",
+      "url": "https://tienda.claro.com.pe/personas/catalogo-celulares/postpago/renovacion",
+      "plataforma": "VTEX · API search pública",
+      "tipo": "vtex",
+      "segmento": "Equipos en plan renovación postpago (precio de equipo al contado)",
+      "params": {
+        "base": "https://tienda.claro.com.pe",
+        "catIds": ["180/182/183/189"],
+        "paginasMax": 60,
+        "searchSub": "",
+        "moneda": "PEN",
+        "agrupar": {
+          "activo": true,
+          "quitarPlan": "\\s*\\+\\s*Renovaci[oó]n\\b.*$",
+          "clave": ["Equipo_Base_Front", "Capacidad_Base_Front", "Color_Base_Front"],
+          "mostrar": ["Capacidad_Base_Front"],
+          "subvencionMaxPct": 10
+        }
+      }
+    },
+    {
+      "id": "movistar",
+      "nombre": "Movistar",
+      "rol": "competencia",
+      "url": "https://tienda.movistar.com.pe/celulares",
+      "plataforma": "Magento 2 · endpoint ajax /landing/ajax/products/ (requiere navegador real · Cloudflare)",
+      "tipo": "magento-ajax",
+      "segmento": "Equipos en plan renovación postpago (precio de equipo al contado)",
+      "params": {
+        "base": "https://tienda.movistar.com.pe",
+        "landing": "/celulares",
+        "endpoint": "/landing/ajax/products/",
+        "channel": "msedge",
+        "headless": false,
+        "moneda": "PEN"
+      }
+    },
+    {
+      "id": "entel",
+      "nombre": "Entel",
+      "rol": "competencia",
+      "url": "https://miportal.entel.pe/personas/catalogo/postpago/renovacion",
+      "plataforma": "Oracle Endeca · catálogo server-rendered (JSON embebido)",
+      "tipo": "endeca-json",
+      "segmento": "Equipos en plan renovación postpago (precio de equipo al contado)",
+      "params": {
+        "base": "https://miportal.entel.pe",
+        "path": "/personas/catalogo/postpago/renovacion",
+        "nrpp": 600,
+        "moneda": "PEN"
+      }
+    }
+  ],
+  "envios": [
+    { "tienda": "claro", "nombre": "Claro", "costoLima": "No observado", "gratisDesde": "No observado", "tiempo": "No observado", "fuente": "https://tienda.claro.com.pe/personas/catalogo-celulares/postpago/renovacion", "cita": "", "observadoEn": null },
+    { "tienda": "movistar", "nombre": "Movistar", "costoLima": "No observado", "gratisDesde": "No observado", "tiempo": "No observado", "fuente": "https://tienda.movistar.com.pe/celulares", "cita": "", "observadoEn": null },
+    { "tienda": "entel", "nombre": "Entel", "costoLima": "No observado", "gratisDesde": "No observado", "tiempo": "No observado", "fuente": "https://miportal.entel.pe/personas/catalogo/postpago/renovacion", "cita": "", "observadoEn": null }
+  ],
+  "exportacion": {
+    "csvBase": "comparativo-telcos-",
+    "csvColumnas": [
+      "Operador",
+      "Equipo",
+      "Marca",
+      "Precio equipo {CODIGO_LOCAL}",
+      "Publicado",
+      "Precio anterior {CODIGO_LOCAL}",
+      "Disponible",
+      "Segmento (marca)",
+      "Categoría tienda",
+      "URL",
+      "Lectura"
+    ]
+  },
+  "textos": {
+    "tituloPagina": "Precios de equipos · Celulares en plan renovación · Perú · Media Lab",
+    "cintaDemo": "DATOS PÚBLICOS DE LOS OPERADORES · LECTURA DIARIA AUTOMÁTICA · SOLO PARA USO INTERNO",
+    "principal": {
+      "eyebrow": "Competencia · Celulares renovación · Perú",
+      "h1": "¿A qué precios está el <em>equipo</em> en plan renovación?",
+      "intro": "Panel con los celulares que Claro, Movistar y Entel publican hoy en su web de renovación postpago, con el precio de equipo al contado. La lectura es automática: cada día se vuelve a consultar cada sitio y aquí aparece lo que sus páginas muestran. No se captura a mano, no se estima ni se completa con información de terceros."
+    },
+    "secciones": {
+      "kpis": {
+        "eyebrow": "Puntos principales a comparar",
+        "h": "El corte de hoy en seis cifras"
+      },
+      "rangos": {
+        "eyebrow": "Nivel de precios",
+        "h": "Rango de precio de equipo por operador",
+        "desc": "Barra: precio de equipo mínimo al máximo publicado (contado renovación). La línea roja marca la mediana. El eje se limita al percentil 95 del conjunto para que los equipos premium no aplasten la escala; los valores por encima se marcan con ▶."
+      },
+      "tramos": {
+        "eyebrow": "Estructura del catálogo",
+        "h": "Distribución por tramos de precio",
+        "desc": "Participación de cada tramo dentro del catálogo de equipos leído de cada operador. Permite ver dónde compite cada uno: gama de entrada vs. gama alta.",
+        "nota": "Tramos propuestos para este panel (no son una categoría oficial de los operadores): {tramos}.",
+        "unidad": "equipos"
+      },
+      "envios": {
+        "eyebrow": "Entrega",
+        "h": "Entrega del equipo en {mercado}",
+        "desc": "Condiciones de entrega del equipo que cada operador publica para la compra online, transcritas de su página pública (enlace en la columna Fuente) y revalidadas en cada lectura diaria: si la página deja de responder o su contenido cambia, se marca en la tabla.",
+        "caption": "Comparativo de entrega del equipo en {mercado} por operador",
+        "colTienda": "Operador",
+        "colCosto": "Costo de entrega",
+        "colGratis": "Entrega gratis desde",
+        "colTiempo": "Plazo de entrega",
+        "colFuente": "Fuente (verificada hoy)",
+        "badgeOk": "OK",
+        "badgeCambio": "Contenido cambió · revisar",
+        "badgeCaida": "Fuente caída",
+        "nota": "Campos observados el {fecha}; el enlace se revalida en cada lectura diaria. Cuando el operador no publica el dato, se indica “No observado”.",
+        "notaCaidas": "{n} fuente(s) de entrega no respondieron hoy: se muestra el último texto observado.",
+        "notaCambios": "{n} política(s) de entrega cambió su contenido respecto a la primera lectura: revisar manualmente antes de citar."
+      },
+      "catalogo": {
+        "eyebrow": "Detalle",
+        "h": "Catálogo comparado",
+        "desc": "Cada fila es un equipo en plan renovación tal como lo publica su operador, con el enlace a la ficha de origen para verificarlo. “Precio equipo ({CODIGO_LOCAL})” es el precio del equipo al contado; “Publicado” es el precio tal como aparece en la web y “Precio anterior” el precio de referencia que el operador muestra como descuento.",
+        "caption": "Catálogo de equipos en plan renovación de los operadores analizados",
+        "buscarLabel": "Buscar equipo o marca",
+        "buscarPlaceholder": "Ej. Galaxy, iPhone, Redmi, Samsung…",
+        "tiendaLabel": "Operador",
+        "tiendaTodas": "Todos los operadores",
+        "segmentoLabel": "Marca",
+        "segmentoTodas": "Todas las marcas",
+        "tramoLabel": "Tramo de precio",
+        "tramoTodas": "Todos",
+        "ordenLabel": "Ordenar por",
+        "ordenPrecioDesc": "Precio: mayor a menor",
+        "ordenPrecioAsc": "Precio: menor a mayor",
+        "ordenTienda": "Operador (A–Z)",
+        "ordenNombre": "Nombre (A–Z)",
+        "soloDisponibles": "Solo disponibles",
+        "colTienda": "Operador",
+        "colProducto": "Equipo",
+        "colPrecio": "Precio equipo ({CODIGO_LOCAL})",
+        "colPublicado": "Publicado",
+        "colPrecioAnterior": "Precio anterior",
+        "colEstado": "Estado",
+        "colFuente": "Fuente",
+        "buscarMas": "Cargar más",
+        "descargarCsv": "Descargar CSV",
+        "disponible": "Disponible",
+        "agotado": "Agotado",
+        "noPublicado": "No publicado",
+        "verFicha": "Ver ficha",
+        "publicadoEn": "publicado en {ext}",
+        "sinCoincidencias": "Ningún equipo coincide con los filtros.",
+        "limpiarFiltros": "Limpiar filtros",
+        "conteoVacio": "0 equipos coinciden (de {n} leídos)",
+        "conteo": "Mostrando {a} de {b} equipos (de {n} leídos)"
+      },
+      "lecturas": {
+        "eyebrow": "Interpretación",
+        "h": "Lecturas del corte actual",
+        "calc": "Cálculo propio sobre datos observados · lectura {fecha}",
+        "sinBase": "Sin base para comparar",
+        "sinBaseTexto": "No hay suficientes precios en la lectura de hoy para calcular la diferencia.",
+        "nuestraMedianaArriba": "Nuestra mediana está {dif}% arriba del resto de operadores",
+        "nuestraMedianaAbajo": "Nuestra mediana está {dif}% abajo del resto de operadores",
+        "medianaTexto": "{propia} publica su catálogo con mediana {medPropia} frente a {medResto} del resto de operadores combinados ({n} equipos). La comparación usa precios de equipo publicados; no empareja modelos ni SKUs idénticos.",
+        "masTachado": "{tienda} es la que más marca precio anterior",
+        "sinTachado": "Casi ningún operador marca precio anterior",
+        "tachadoTexto": "{tienda} publica precio anterior en el {pct}% de sus equipos ({a} de {b}). En total, {total} de {n} equipos muestran descuento declarado. Un precio anterior es una afirmación del operador, no una verificación del ahorro real.",
+        "tachadoTextoNo": "Ningún operador muestra precio anterior publicado en la lectura de hoy.",
+        "segmentoAlto": "Gama alta ({etq}): {n} equipos",
+        "segmentoAltoTexto": "Concentración por operador: {tiendas}. {propia} aporta {n} de ellos. Cifras de conteo sobre precios observados, sin ajuste por marca, modelo ni capacidad.",
+        "segmentoAltoTextoNo": "Ningún equipo de la lectura llega a {etq}.",
+        "envioTitulo": "Entrega: {n} de {m} publican costo de entrega",
+        "envioTexto": "{gratis}. {n} operador(es) no publican el costo de entrega en {mercado} ({sinCosto}), por lo que ese punto no es comparable hasta que se cotice en su checkout.",
+        "extTitulo": "{n} precios llegan en {ext}",
+        "extTexto": "{tiendas} publican en {ext}; esos {n} precios se convierten a {loc} con tasa {tasa} ({fuente}, obtenida el {fecha}). El precio publicado en su web queda visible en la columna “Publicado”. El tipo de cambio varía: una conversión es una estimación del panel, no un precio del operador.",
+        "extTextoActualizado": "Este corte no incluyó precios en {ext}; la tasa de referencia quedó en {tasa} ({fuente}).",
+        "extTextoNunca": "Este corte no incluyó precios en {ext}."
+      }
+    },
+    "chips": {
+      "ultimaLectura": "Última lectura",
+      "productos": "Equipos con precio",
+      "fuentes": "Fuentes leídas",
+      "enOferta": "Con precio anterior",
+      "convertidos": "Convertidos de {ext}",
+      "sinConversion": "Sin conversión"
+    },
+    "kpis": {
+      "productos": {
+        "l": "Equipos con precio",
+        "n": "Catálogo leído en {n} operadores · lectura del {fecha}"
+      },
+      "mediana": {
+        "l": "Mediana de precio de equipo",
+        "n": "Valor que deja la mitad del catálogo por debajo. Cálculo propio; incluye {n} precios convertidos desde {ext}."
+      },
+      "rango": {
+        "l": "Rango mínimo – máximo",
+        "n": "Extremos de todo el catálogo de equipos leído."
+      },
+      "tachado": {
+        "l": "Con precio anterior publicado",
+        "n": "Equipo con precio de referencia visible en la web (descuento declarado por el operador)."
+      },
+      "fuentes": {
+        "l": "Fuentes leídas hoy",
+        "n": "Catálogo leído en {a} de {b} operadores; {c} sin catálogo de precios publicado. Si una web falla, se conserva su última lectura buena y se marca como error."
+      },
+      "envio": {
+        "l": "Entrega publicada",
+        "n": "Operadores que declaran un costo, monto mínimo o entrega incluida en su política (ver tabla de entrega)."
+      }
+    },
+    "rangos": {
+      "nota": "Eje limitado al percentil 95 del catálogo: {tope}. La marca ▶ indica que el precio máximo de ese operador supera el tope del eje.",
+      "mediana": "mediana",
+      "minText": "mín",
+      "maxText": "máx"
+    },
+    "footer": {
+      "marca": "Media Lab · Panel interno de precios de equipos en plan renovación.",
+      "texto": "Los precios, promociones y disponibilidad son los que cada operador publica en su web al momento de la lectura y pueden cambiar sin aviso: verifique la ficha de origen antes de citar una cifra. Las diferencias entre operadores no implican que se trate del mismo equipo, capacidad o color. Los tramos de precio, las medianas y los porcentajes de este panel son cálculos sobre los datos observados, no información publicada por los operadores. El color, la capacidad y la referencia pueden hacer que dos publicaciones del mismo modelo difieran; en Claro, cuando la web lista el mismo equipo repetido por cada plan, se consolidó a una sola fila por equipo (marca, modelo, capacidad y color) conservando el menor precio de contado publicado; las ofertas con subvención total (equipo a ≈ S/ 0,01) no cuentan para ese mínimo y, si un equipo solo aparece así, se muestra su precio de lista. Uso interno; requiere aprobación antes de compartirse fuera del equipo.",
+      "boton": "Ver metodología, fuentes y limitaciones"
+    },
+    "dialogo": {
+      "eyebrow": "Trazabilidad",
+      "h": "Metodología y fuentes",
+      "leido": "Lectura automática del {fecha} (hora de {zona}), duración {s} s. La API pública de VTEX (Claro) y el JSON embebido de Oracle Endeca (Entel) se consultan directamente; Movistar exige un navegador real (Cloudflare) y se lee con Playwright en modo navegador. Los operadores que no exponen su catálogo se reportan como “sin catálogo de precios”.",
+      "fxNueva": "Tipo de cambio aplicado: <b>1 {ext} = {tasa} {loc}</b>, fuente {fuente}, obtenido el {fecha}. Se usa para las tiendas que publican en {ext} ({tiendas}); el precio original en {ext} permanece en la tabla.",
+      "fxAnterior": "Sin tipo de cambio nuevo ({advertencia}). Se mantiene la última tasa conocida: 1 {ext} = {tasa} {loc}.",
+      "fxNinguna": "No hay tipo de cambio disponible ({advertencia}); los precios en {ext} quedan sin convertir y se excluyen de los cálculos en {loc}.",
+      "obs": "Observado:",
+      "obsTexto": "nombre, precio de equipo al contado, precio anterior, disponibilidad, URL e imagen tal como aparecen en la página pública de cada operador.",
+      "calc": "Cálculo propio del panel:",
+      "calcTexto": "medianas, rangos, tramos, participaciones y diferencias porcentuales. Están derivados de los precios observados en la lectura y no son información publicada por los operadores.",
+      "noHace": "No se hace:",
+      "noHaceTexto": "predicción, benchmarks externos, ajuste por marca, modelo, capacidad, color ni equivalencias entre equipos de marcas o especificaciones distintas.",
+      "limitaciones": [
+        "El precio comparado es el precio del equipo al contado del plan de renovación postpago, tal como lo publica cada operador. No incluye el cargo mensual del plan ni otros conceptos.",
+        "Claro lista el mismo equipo repetido por cada plan (VTEX); para comparar el precio de equipo se consolidó a una sola fila por equipo (marca+modelo+capacidad+color, tomados de las especificaciones estructuradas del producto), conservando el menor precio de contado publicado. Las ofertas con subvención total por plan (equipo a ≈ S/ 0,01) se excluyen de ese mínimo; si un equipo solo aparece con subvención total, se usa su precio de lista como valor del equipo. Entel y Movistar ya listan una fila por equipo.",
+        "Movistar bloquea el acceso automatizado sin navegador (Cloudflare) y se lee con un navegador real; si la fuente cae, se conserva su última lectura buena y se marca como error.",
+        "Las comparaciones son a nivel de catálogo, no de modelo contra modelo: dos operadores pueden listar el mismo modelo con diferencias de capacidad, color o bundle que este panel no captura.",
+        "Las lecturas son instantáneos diarios: precio, stock y promociones pueden cambiar varias veces al día en la web de origen.",
+        "La política de entrega se transcribe de una página pública y solo se revalida su disponibilidad; no se cotiza el checkout, donde algunas operaciones calculan el costo final según distrito.",
+        "No se hace predicción ni benchmarks externos; las comparaciones entre operadores no implican equivalencia de equipo."
+      ],
+      "cerrar": "Cerrar"
+    },
+    "errores": {
+      "noLeido": "No se pudo leer data.json. {msg}. Abre el panel por un servidor web local o vuelve a intentarlo.",
+      "sinDatos": "El archivo data.json aún no existe o no es accesible. Se genera con {comando}.",
+      "reintentar": "Reintentar"
+    }
+  }
+}

@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231d1d1b'/%3E%3Cpath d='M10 6h12l-1 8a5 5 0 0 1-10 0z' fill='%23bc9e68'/%3E%3Crect x='15' y='18' width='2' height='7' fill='%23bc9e68'/%3E%3Crect x='11' y='25' width='10' height='2' fill='%23bc9e68'/%3E%3C/svg%3E">
+<title>Precios de competencia · Zapatillas y calzado deportivo · Lima · Media Lab</title>
+<style>
+:root{--ink:#1d1d1b;--gold:#8a6e3f;--gold-deep:#755935;--paper:#f5f1e9;--cream:#ebe4d8;--line:#d5ccbd;--muted:#70695f;--ribbon:#8d7047;--error:#993e37;--ok:#3f6b4a;--warn:#8a5a1f}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{height:92px;background:var(--ink);padding:0 6vw;display:flex;align-items:center;justify-content:space-between;color:#cab993;position:sticky;top:0;z-index:5}
+header img{width:215px}
+header button{color:#cab993!important;background:none;border:0;font:13px inherit;cursor:pointer;text-decoration:underline;text-underline-offset:5px}
+.demo-ribbon{background:var(--ribbon);color:#fff;padding:9px 6vw;text-align:center;font-size:11px;letter-spacing:.08em}
+main{max-width:1160px;margin:auto;padding:72px 34px}
+.eyebrow{color:var(--gold-deep);text-transform:uppercase;letter-spacing:.18em;font-size:10px;font-weight:600}
+h1,h2,h3{font-family:Georgia,serif;font-weight:400;line-height:1.08;letter-spacing:-.035em;margin:0}
+h1{font-size:56px;max-width:860px;margin:15px 0 24px}
+h1 em{color:var(--gold);font-weight:400}
+h2{font-size:38px;margin:13px 0 8px}
+.intro{font:19px/1.6 Georgia,serif;color:#5e584f;max-width:760px}
+.meta-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.chip{background:var(--cream);border:1px solid var(--line);padding:8px 13px;font-size:12px;color:#4c463d}
+.chip b{color:var(--ink)}
+section{margin-top:64px}
+.grid-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.panel{background:#fbf9f4;border:1px solid var(--line);padding:22px;min-width:0}
+.panel .k-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.panel .k-value{font:34px Georgia,serif;margin:8px 0 4px;letter-spacing:-.03em;word-break:break-word}
+.panel .k-note{font-size:12px;color:var(--muted);line-height:1.45}
+.panel.error-panel{border-left:3px solid var(--error)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.section-head p{margin:0;max-width:620px;font-size:14px;color:var(--muted)}
+.note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.5}
+/* barras de rango */
+.range-list{margin-top:26px;border-top:1px solid var(--line)}
+.range-row{display:grid;grid-template-columns:170px minmax(0,1fr) 250px;gap:18px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line)}
+.range-name{font-size:13px;font-weight:600}
+.range-name .rol{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep);font-weight:600}
+.range-track{position:relative;height:26px;background:var(--cream);border:1px solid var(--line);min-width:0;overflow:hidden}
+.range-fill{position:absolute;top:0;bottom:0;background:#8a6e3f}
+.range-fill.propia{background:var(--ink)}
+.range-median{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--error)}
+.range-vals{font-size:12px;color:#4c463d;text-align:right;font-variant-numeric:tabular-nums}
+.range-vals b{font-family:Georgia,serif;font-size:15px;color:var(--ink)}
+/* tramos */
+.tramo-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px;font-size:12px;color:#4c463d}
+.tramo-legend span{display:flex;align-items:center;gap:7px}
+.sw{width:13px;height:13px;border:1px solid var(--line);display:inline-block}
+.tramo-row{display:grid;grid-template-columns:170px minmax(0,1fr);gap:18px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+.tramo-bar{display:flex;height:30px;border:1px solid var(--line);overflow:hidden;min-width:0}
+.tramo-seg{display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;min-width:0;overflow:hidden;white-space:nowrap}
+/* tablas */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);background:#fbf9f4;margin-top:22px;max-height:72vh;overscroll-behavior:contain}
+table{border-collapse:collapse;width:100%;font-size:13px}
+caption{text-align:left;padding:0;font-size:0;height:0;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--cream);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:#4c463d;white-space:nowrap;position:sticky;top:0}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+a{color:var(--gold-deep)}
+.badge{display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;padding:3px 8px;border:1px solid var(--line);background:var(--cream);color:#4c463d}
+.badge.ok{border-color:#9dbfa7;background:#e7f0ea;color:var(--ok)}
+.badge.err{border-color:#d8a9a4;background:#f7e8e6;color:var(--error)}
+.badge.warn{border-color:#dcc39a;background:#f6eddd;color:var(--warn)}
+/* catálogo */
+.controles{display:grid;grid-template-columns:minmax(220px,1.6fr) repeat(4,minmax(140px,1fr)) auto;gap:14px;margin-top:26px;align-items:end}
+.campo label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:7px}
+.campo input,.campo select{width:100%;font:15px inherit;padding:11px 12px;border:1px solid #8a8175;background:#fffdf9;color:var(--ink)}
+.campo.check{display:flex;align-items:center;gap:9px;padding-bottom:11px}
+.campo.check label{margin:0;font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink)}
+.campo.check input{width:auto;accent-color:var(--gold)}
+.button{border:1px solid var(--ink);background:var(--ink);color:#fff;padding:13px 19px;cursor:pointer;font:13px inherit;text-decoration:none;display:inline-block}
+.button:hover{background:#433e37}
+.button.secundario{background:transparent;color:var(--ink)}
+.button.secundario:hover{background:var(--cream)}
+.acciones{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.conteo{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.thumb{width:44px;height:44px;object-fit:contain;background:var(--cream);border:1px solid var(--line);mix-blend-mode:multiply;display:block}
+.prod{display:flex;gap:12px;align-items:center;min-width:230px}
+.prod .p-nombre{font-weight:600;line-height:1.35}
+.prod .p-marca{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.precio-conv{display:block;font-size:10px;color:var(--muted);letter-spacing:.04em}
+/* lecturas */
+.lecturas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:24px}
+.lectura{background:#fbf9f4;border:1px solid var(--line);border-top:3px solid var(--gold);padding:22px}
+.lectura h3{font-size:21px;margin-bottom:10px;line-height:1.25}
+.lectura p{margin:0;font-size:14px;color:#4c463d}
+.lectura .calc{display:block;margin-top:14px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep)}
+footer{max-width:1160px;margin:auto;border-top:1px solid var(--line);padding:30px 34px 50px;color:var(--muted);font-size:11px}
+footer strong{color:var(--ink)}
+dialog{width:min(880px,calc(100% - 34px));max-height:86vh;border:0;padding:0;background:#f8f5ef;box-shadow:0 24px 90px #0005;color:var(--ink)}
+dialog::backdrop{background:#181713aa}
+.dialog-inner{padding:32px;overflow:auto;max-height:86vh}
+.dialog-inner h2{font-size:32px;margin-bottom:6px}
+.dialog-inner h3{font-size:19px;margin:26px 0 8px}
+.dialog-inner p,.dialog-inner li{font-size:14px;color:#4c463d}
+.dialog-actions{display:flex;justify-content:flex-end;margin-top:22px}
+ul.fuentes{list-style:none;padding:0;margin:0}
+ul.fuentes li{border-bottom:1px solid var(--line);padding:12px 0;font-size:13px}
+ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
+.estados span{display:inline-block;margin-right:8px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cargando{padding:60px 0;text-align:center;color:var(--muted);font:19px Georgia,serif}
+:focus-visible{outline:3px solid #8a6e3f;outline-offset:3px}
+@media(max-width:640px){.grid-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){.grid-kpis{grid-template-columns:1fr}}
+@media(max-width:900px){
+  .range-row{grid-template-columns:1fr;gap:8px}
+  .range-vals{text-align:left}
+  .tramo-row{grid-template-columns:1fr;gap:8px}
+  .controles{grid-template-columns:1fr 1fr}
+}
+@media(max-width:780px){
+  header{height:76px;padding:0 22px}
+  header img{width:170px}
+  main{padding:43px 22px}
+  h1{font-size:38px}
+  h2{font-size:30px}
+  .intro{font-size:17px}
+  section{margin-top:48px}
+  .controles{grid-template-columns:1fr}
+  .demo-ribbon{font-size:10px;padding:8px 22px}
+  .table-wrap{border:0;background:transparent;overflow:visible}
+  table,thead,tbody,tr,td{display:block}
+  thead{display:none}
+  tbody tr{background:#fbf9f4;border:1px solid var(--line);margin-bottom:14px;padding:8px 4px}
+  td{border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:16px;text-align:right;overflow-wrap:anywhere}
+  td:last-child{border-bottom:0}
+  td::before{content:attr(data-label);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:left;flex:0 0 38%}
+  td .prod{justify-content:flex-end;text-align:left;min-width:0}
+  td .prod .p-nombre,td .prod .p-marca{overflow-wrap:anywhere}
+  td.num{text-align:right}
+}
+</style>
+</head>
+<body>
+<header>
+  <img id="logo-marca" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='20' viewBox='0 0 200 20'%3E%3Ctext x='0' y='15' font-family='Arial,sans-serif' font-size='14' font-weight='700' fill='%23ffffff' letter-spacing='1'%3EMEDIA LAB%3C/text%3E%3C/svg%3E" alt="Media Lab · Panel interno de precios">
+  <button type="button" id="btn-metodologia-top">Metodología y fuentes</button>
+</header>
+<div class="demo-ribbon" id="demo-ribbon">DATOS PÚBLICOS DE LAS TIENDAS · LECTURA DIARIA AUTOMÁTICA · SOLO PARA USO INTERNO</div>
+
+<main>
+  <p class="eyebrow" id="hero-eyebrow">Competencia · Zapatillas · Lima</p>
+  <h1 id="hero-h1">¿A qué precios está vendiendo <em>la competencia</em>?</h1>
+  <p class="intro" id="hero-intro">Panel con las zapatillas y el calzado deportivo que cada tienda publica hoy en su web, con la política de envío en Lima. La lectura es automática: cada día se vuelve a consultar cada sitio y aquí aparece lo que sus páginas muestran. No se captura a mano, no se estima ni se completa con información de terceros.</p>
+  <div class="meta-strip" id="meta-strip" aria-live="polite"><span class="chip">Cargando datos…</span></div>
+
+  <section id="kpis" aria-labelledby="h-kpis">
+    <p class="eyebrow" id="kpis-eyebrow">Puntos principales a comparar</p>
+    <h2 id="h-kpis">El corte de hoy en seis cifras</h2>
+    <div class="grid-kpis" id="kpis-grid"></div>
+  </section>
+
+  <section id="rangos" aria-labelledby="h-rangos">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" id="rangos-eyebrow">Nivel de precios</p>
+        <h2 id="h-rangos">Rango de precio por tienda</h2>
+      </div>
+      <p id="rangos-desc">Barra: precio mínimo al máximo publicado. La línea roja marca la mediana. El eje se limita al percentil 95 del conjunto para que los modelos premium no aplasten la escala; los valores por encima se marcan con ▶.</p>
+    </div>
+    <div class="range-list" id="range-list"></div>
+    <p class="note" id="range-note"></p>
+  </section>
+
+  <section id="tramos" aria-labelledby="h-tramos">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" id="tramos-eyebrow">Estructura del catálogo</p>
+        <h2 id="h-tramos">Distribución por tramos de precio</h2>
+      </div>
+      <p id="tramos-desc">Participación de cada tramo dentro del catálogo leído de cada tienda. Permite ver dónde compite cada una: volumen de entrada vs. segmento alto.</p>
+    </div>
+    <div class="tramo-legend" id="tramo-legend"></div>
+    <div id="tramo-list" style="margin-top:14px;border-top:1px solid var(--line)"></div>
+    <p class="note" id="tramos-nota">Tramos propuestos para este panel (no son una categoría oficial de las tiendas): &lt; S/ 100 · S/ 100–299 · S/ 300–599 · S/ 600–999 · S/ 1,000 o más.</p>
+  </section>
+
+  <section id="envios" aria-labelledby="h-envios">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" id="envios-eyebrow">Logística</p>
+        <h2 id="h-envios">Envío y entrega en Lima</h2>
+      </div>
+      <p id="envios-desc">Campos transcritos de la política pública de cada tienda (enlace en la columna Fuente) y revalidados en cada lectura diaria: si la página deja de responder o su contenido cambia, se marca en la tabla.</p>
+    </div>
+    <div class="table-wrap" role="region" tabindex="0" aria-labelledby="envios-caption">
+      <table id="tabla-envios">
+        <caption id="envios-caption">Comparativo de políticas de envío en Lima por tienda</caption>
+        <thead>
+          <tr>
+            <th scope="col">Tienda</th>
+            <th scope="col">Costo en Lima</th>
+            <th scope="col">Envío gratis desde</th>
+            <th scope="col">Tiempo de entrega</th>
+            <th scope="col">Fuente (verificada hoy)</th>
+          </tr>
+        </thead>
+        <tbody id="envios-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="envios-note"></p>
+  </section>
+
+  <section id="catalogo" aria-labelledby="h-catalogo">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" id="catalogo-eyebrow">Detalle</p>
+        <h2 id="h-catalogo">Catálogo comparado</h2>
+      </div>
+      <p id="catalogo-desc">Cada fila es un producto tal como lo publica su tienda, con el enlace a la ficha de origen para verificarlo. “Precio (S/)” expresa todo en soles (con la tasa del día cuando la tienda publica en otra moneda); “Publicado” es el precio en la moneda original de la web y “Precio anterior” el precio tachado que la tienda muestra como oferta.</p>
+    </div>
+
+    <div class="controles">
+      <div class="campo">
+        <label for="f-buscar" id="lab-buscar">Buscar producto o marca</label>
+        <input type="search" id="f-buscar" placeholder="Ej. Catena, malbec, champagne…" autocomplete="off">
+      </div>
+      <div class="campo">
+        <label for="f-tienda" id="lab-tienda">Tienda</label>
+        <select id="f-tienda"></select>
+      </div>
+      <div class="campo">
+        <label for="f-segmento" id="lab-segmento">Segmento</label>
+        <select id="f-segmento"></select>
+      </div>
+      <div class="campo">
+        <label for="f-tramo" id="lab-tramo">Tramo de precio</label>
+        <select id="f-tramo">
+          <option value="todas">Todos</option>
+          <option value="0-100">&lt; S/ 100</option>
+          <option value="100-300">S/ 100 – 299</option>
+          <option value="300-600">S/ 300 – 599</option>
+          <option value="600-1000">S/ 600 – 999</option>
+          <option value="1000-max">S/ 1,000 o más</option>
+        </select>
+      </div>
+      <div class="campo">
+        <label for="f-orden" id="lab-orden">Ordenar por</label>
+        <select id="f-orden">
+          <option value="precio-desc">Precio: mayor a menor</option>
+          <option value="precio-asc">Precio: menor a mayor</option>
+          <option value="tienda">Tienda (A–Z)</option>
+          <option value="nombre">Nombre (A–Z)</option>
+        </select>
+      </div>
+      <div class="campo check">
+        <input type="checkbox" id="f-disponible">
+        <label for="f-disponible" id="lab-disponible">Solo disponibles</label>
+      </div>
+    </div>
+
+    <div class="acciones">
+      <span class="conteo" id="conteo" aria-live="polite">—</span>
+      <button type="button" class="button secundario" id="btn-mas">Cargar más</button>
+      <button type="button" class="button secundario" id="btn-csv">Descargar CSV</button>
+    </div>
+
+    <div class="table-wrap" role="region" tabindex="0" aria-labelledby="catalogo-caption">
+      <table id="tabla-catalogo">
+        <caption id="catalogo-caption">Catálogo de productos y precios de las tiendas analizadas</caption>
+        <thead>
+          <tr>
+            <th scope="col">Tienda</th>
+            <th scope="col">Producto</th>
+            <th scope="col" class="num">Precio (S/)</th>
+            <th scope="col">Publicado</th>
+            <th scope="col" class="num">Precio anterior</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Fuente</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body"></tbody>
+      </table>
+    </div>
+    <div class="acciones" id="acciones-fin"></div>
+  </section>
+
+  <section id="lecturas" aria-labelledby="h-lecturas">
+    <p class="eyebrow">Interpretación</p>
+    <h2 id="h-lecturas">Lecturas del corte actual</h2>
+    <div class="lecturas" id="lecturas-grid"></div>
+  </section>
+</main>
+
+<footer>
+  <strong id="footer-marca">Media Lab · Panel interno de precios de competencia.</strong>
+  <p id="footer-texto">Los precios, promociones y disponibilidad son los que cada tienda publica en su web al momento de la lectura y pueden cambiar sin aviso: verifique la ficha de origen antes de citar una cifra. Las diferencias entre tiendas no implican que se trate del mismo modelo, talla o marcado. Los tramos de precio, las medianas y los porcentajes de este panel son cálculos sobre los datos observados, no información publicada por las tiendas. La talla, el color y la referencia pueden hacer que dos publicaciones del mismo modelo de una misma tienda difieran; este panel no las consolida. Uso interno; requiere aprobación antes de compartirse fuera del equipo.</p>
+  <p id="footer-version"></p>
+  <p style="margin-top:12px"><button type="button" class="button secundario" id="btn-metodologia">Ver metodología, fuentes y limitaciones</button></p>
+</footer>
+
+<dialog id="dlg-metodologia" aria-labelledby="dlg-title">
+  <div class="dialog-inner">
+    <p class="eyebrow" id="dlg-eyebrow">Trazabilidad</p>
+    <h2 id="dlg-title">Metodología y fuentes</h2>
+    <p id="dlg-leido">—</p>
+
+    <h3>Fuentes leídas</h3>
+    <ul class="fuentes" id="dlg-fuentes"></ul>
+
+    <h3>Moneda y conversiones</h3>
+    <p id="dlg-fx">—</p>
+
+    <h3>Qué es dato observado y qué es cálculo</h3>
+    <ul id="dlg-distincion">
+      <li><b>Observado:</b> nombre, precio, precio tachado, disponibilidad, URL e imagen tal como aparecen en la página pública de cada tienda, y los textos de la política de envío (con su enlace).</li>
+      <li><b>Cálculo propio del panel:</b> medianas, rangos, tramos, participaciones y diferencias porcentuales. Están derivados de los precios observados en la lectura y no son información publicada por las tiendas.</li>
+      <li><b>No se hace:</b> predicción, benchmarks externos, ajuste por marca, talla, color, modelo, eficiencia ni equivalencias entre productos de marcas o specs distintas.</li>
+    </ul>
+
+    <h3>Limitaciones conocidas</h3>
+    <ul id="dlg-limitaciones"></ul>
+
+    <div class="dialog-actions">
+      <button type="button" class="button" id="btn-cerrar">Cerrar</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+// Este panel se configura a sí mismo con el "config" que trae data.json
+// (emitido por scripts/actualizar.mjs a partir de config.json). Para una nueva
+// industria no se edita este archivo: se cambia config.json y se corre el motor.
+const $ = (s) => document.querySelector(s);
+const norm = (s) => (s || '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+const escapeHtml = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const TRAMOS_POR_DEFECTO = [
+  { id: '0-100', etq: '< S/ 100', min: 0, max: 100, color: '#6b4a2b' },
+  { id: '100-300', etq: 'S/ 100–299', min: 100, max: 300, color: '#7a5c38' },
+  { id: '300-600', etq: 'S/ 300–599', min: 300, max: 600, color: '#5c564c' },
+  { id: '600-1000', etq: 'S/ 600–999', min: 600, max: 1000, color: '#3f3b34' },
+  { id: '1000-max', etq: 'S/ 1,000 o más', min: 1000, max: Infinity, color: '#1d1d1b' },
+];
+
+let DATOS = null;
+let cfg = null;
+let TX = null;
+let TRAMOS = [];
+let FILA = [];
+let VISIBLES = 50;
+const F = { q: '', tienda: 'todas', tramo: 'todas', orden: 'precio-desc', disponible: false, segmento: 'todas' };
+
+// Valores resueltos en aplicarConfigo() desde DATOS.config
+let LOCALE, ZONA, COD, SIM, EXT, SIM_E, TIENDA_PROPIA, EMPRESA_NOMBRE, EMPRESA_ROL;
+let FORMATO, sMon, sMonCorto, fFecha, fFechaCorta;
+
+// T(key): lee un texto del config (claves por puntos). T('secciones.catalogo.desc')
+function T(key) {
+  let v = TX;
+  for (const k of String(key).split('.')) { if (v == null) return ''; v = v[k]; }
+  return v == null ? '' : v;
+}
+
+// tmpl/resolv: reemplazan tokens {clave} dentro de los textos del config
+function tmpl(tpl, v) {
+  return String(tpl).replace(/\{([a-zA-Z_]+)\}/g, (_, k) => (v && v[k] != null ? v[k] : '\u007b' + k + '\u007d'));
+}
+function resolv(tpl, extra) {
+  const ctx = {
+    mercado: (cfg && cfg.mercado) || '',
+    monedaLocal: (cfg && cfg.monedaLocal && cfg.monedaLocal.nombre) || 'soles',
+    CODIGO_LOCAL: COD, COD_LOC: COD, LOC: COD,
+    ext: EXT, EXT: EXT,
+    tramos: TRAMOS.map((t) => t.etq).join(' · '),
+    ...(extra || {}),
+  };
+  return tmpl(tpl, ctx);
+}
+
+// aplicarConfigo(): resuelve moneda, tramos y textos desde DATOS.config
+function aplicarConfigo() {
+  cfg = DATOS.config || {};
+  const ML = cfg.monedaLocal || {};
+  const ME = cfg.monedaExtranjera || {};
+  LOCALE = ML.locale || 'es-PE';
+  ZONA = ML.zona || 'America/Lima';
+  COD = ML.codigo || 'PEN';
+  SIM = ML.simbolo || 'S/';
+  EXT = ME.codigo || 'USD';
+  SIM_E = ME.simbolo || 'US$';
+  TIENDA_PROPIA = cfg.tiendaPropiaId || 'ninguna';
+  EMPRESA_NOMBRE = (cfg.empresa && cfg.empresa.nombre) || 'Nuestra tienda';
+  EMPRESA_ROL = (cfg.empresa && cfg.empresa.rol) || 'Nuestra tienda';
+  TRAMOS = (cfg.tramos || []).map((t) => ({ ...t, max: t.max == null ? Infinity : t.max }));
+  if (!TRAMOS.length) TRAMOS = TRAMOS_POR_DEFECTO.map((t) => ({ ...t }));
+  FORMATO = new Intl.NumberFormat(LOCALE, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const F0 = new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 });
+  const umbral = cfg.tramoSegAlto || 1000;
+  sMon = (n) => SIM + ' ' + FORMATO.format(n);
+  sMonCorto = (n) => (n >= umbral ? SIM + ' ' + F0.format(n) : sMon(n));
+  fFecha = (iso) => new Date(iso).toLocaleString(LOCALE, { timeZone: ZONA, day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  fFechaCorta = (iso) => new Date(iso).toLocaleDateString(LOCALE, { timeZone: ZONA, day: '2-digit', month: 'short', year: 'numeric' });
+  TX = cfg.textos || {};
+  aplicarTexto();
+  llenarTramoSelect();
+}
+
+function copiarTexto(sel, html) { const n = $(sel); if (n) n.innerHTML = html; }
+
+function aplicarTexto() {
+  if (T('tituloPagina')) document.title = T('tituloPagina');
+  const lg = $('#logo-marca');
+  if (lg && cfg.empresa && cfg.empresa.logoDataUri) lg.setAttribute('src', cfg.empresa.logoDataUri);
+  const pares = [
+    ['#demo-ribbon', T('cintaDemo')],
+    ['#hero-eyebrow', T('principal.eyebrow')],
+    ['#hero-h1', T('principal.h1')],
+    ['#hero-intro', resolv(T('principal.intro'))],
+    ['#kpis-eyebrow', T('secciones.kpis.eyebrow')],
+    ['#h-kpis', T('secciones.kpis.h')],
+    ['#rangos-eyebrow', T('secciones.rangos.eyebrow')],
+    ['#h-rangos', T('secciones.rangos.h')],
+    ['#rangos-desc', T('secciones.rangos.desc')],
+    ['#tramos-eyebrow', T('secciones.tramos.eyebrow')],
+    ['#h-tramos', T('secciones.tramos.h')],
+    ['#tramos-desc', T('secciones.tramos.desc')],
+    ['#tramos-nota', resolv(T('secciones.tramos.nota'))],
+    ['#envios-eyebrow', T('secciones.envios.eyebrow')],
+    ['#h-envios', resolv(T('secciones.envios.h'))],
+    ['#envios-desc', T('secciones.envios.desc')],
+    ['#envios-caption', resolv(T('secciones.envios.caption'))],
+    ['#catalogo-eyebrow', T('secciones.catalogo.eyebrow')],
+    ['#h-catalogo', T('secciones.catalogo.h')],
+    ['#catalogo-desc', resolv(T('secciones.catalogo.desc'))],
+    ['#catalogo-caption', T('secciones.catalogo.caption')],
+    ['#lecturas-eyebrow', T('secciones.lecturas.eyebrow')],
+    ['#h-lecturas', T('secciones.lecturas.h')],
+    ['#lab-buscar', T('secciones.catalogo.buscarLabel')],
+    ['#lab-tienda', T('secciones.catalogo.tiendaLabel')],
+    ['#lab-segmento', T('secciones.catalogo.segmentoLabel')],
+    ['#lab-tramo', T('secciones.catalogo.tramoLabel')],
+    ['#lab-orden', T('secciones.catalogo.ordenLabel')],
+    ['#lab-disponible', T('secciones.catalogo.soloDisponibles')],
+    ['#btn-mas', T('secciones.catalogo.buscarMas')],
+    ['#btn-csv', T('secciones.catalogo.descargarCsv')],
+    ['#btn-metodologia', T('footer.boton')],
+    ['#btn-metodologia-top', T('footer.boton')],
+    ['#footer-marca', T('footer.marca')],
+    ['#footer-texto', T('footer.texto')],
+    ['#dlg-eyebrow', T('dialogo.eyebrow')],
+    ['#dlg-title', T('dialogo.h')],
+    ['#btn-cerrar', T('dialogo.cerrar')],
+  ];
+  for (const [sel, txt] of pares) if (txt !== '') copiarTexto(sel, txt);
+  const fv = $('#footer-version');
+  if (fv && cfg.version) fv.textContent = `Panel v${cfg.version}${cfg.versionFecha ? ' · ' + cfg.versionFecha : ''}`;
+  const b = $('#f-buscar');
+  if (b) b.setAttribute('placeholder', T('secciones.catalogo.buscarPlaceholder'));
+  const envCols = ['colTienda', 'colCosto', 'colGratis', 'colTiempo', 'colFuente'];
+  document.querySelectorAll('#tabla-envios th').forEach((th, i) => { const t = resolv(T('secciones.envios.' + envCols[i])); if (t) th.textContent = t; });
+  const catCols = ['colTienda', 'colProducto', 'colPrecio', 'colPublicado', 'colPrecioAnterior', 'colEstado', 'colFuente'];
+  document.querySelectorAll('#tabla-catalogo th').forEach((th, i) => { const t = resolv(T('secciones.catalogo.' + catCols[i])); if (t) th.textContent = t; });
+  const oSel = $('#f-orden');
+  const ordKeys = ['ordenPrecioDesc', 'ordenPrecioAsc', 'ordenTienda', 'ordenNombre'];
+  if (oSel) ordKeys.forEach((k, i) => { const o = oSel.options[i + 1]; const t = T('secciones.catalogo.' + k); if (o && t) o.textContent = t; });
+}
+
+function llenarTramoSelect() {
+  const s = $('#f-tramo');
+  if (!s) return;
+  const base = '<option value="todas">' + escapeHtml(T('secciones.catalogo.tramoTodas') || 'Todos') + '</option>';
+  s.innerHTML = base + TRAMOS.map((t) => `<option value="${t.id}">${escapeHtml(t.etq)}</option>`).join('');
+}
+
+function mediana(arr) {
+  if (!arr.length) return null;
+  const a = [...arr].sort((x, y) => x - y);
+  const m = Math.floor(a.length / 2);
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+}
+function percentil(arr, p) {
+  if (!arr.length) return 0;
+  const a = [...arr].sort((x, y) => x - y);
+  return a[Math.min(a.length - 1, Math.max(0, Math.ceil(p * a.length) - 1))];
+}
+const nombreTienda = (id) => DATOS.fuentes.find((f) => f.id === id)?.nombre || id;
+
+async function cargar() {
+  try {
+    const r = await fetch('data.json?t=' + Date.now());
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    DATOS = await r.json();
+    if (!DATOS.productos?.length) throw new Error('el archivo no trae productos');
+    aplicarConfigo();
+    pintarTodo();
+  } catch (e) {
+    $('#meta-strip').innerHTML = '<span class="chip" style="border-color:#d8a9a4;background:#f7e8e6;color:#993e37"><b>' + T('errores.noLeido').replace(/\{msg\}/, escapeHtml(e.message)) + '</b></span>';
+    $('#kpis-grid').innerHTML = '<div class="panel error-panel"><div class="k-label">' + T('errores.sinDatos').replace(/\{comando\}/, '<code>node scripts/actualizar.mjs</code>') + '</div><div class="k-value">—</div><div class="k-note"></div><button type="button" class="button" id="btn-reintentar" style="margin-top:14px">' + T('errores.reintentar') + '</button></div>';
+    $('#btn-reintentar')?.addEventListener('click', cargar);
+  }
+}
+
+function pintarTodo() {
+  renderMeta();
+  renderKpis();
+  renderRangos();
+  renderTramos();
+  renderEnvios();
+  renderLecturas();
+  renderMetodologia();
+  poblarTiendas();
+  llenarSegmentoSelect();
+  aplicarFiltros();
+}
+
+function renderMeta() {
+  const r = DATOS.resumen;
+  const chips = [
+    `<span class="chip">${resolv(T('chips.ultimaLectura'))}: <b>${fFecha(DATOS.generadoEn)}</b> (hora de ${ZONA.replace('America/', '')})</span>`,
+    `<span class="chip">${T('chips.productos')}: <b>${r.productos}</b></span>`,
+    `<span class="chip">${T('chips.fuentes')}: <b>${r.fuentesOk} de ${r.fuentesTotal}</b></span>`,
+    `<span class="chip">${T('chips.enOferta')}: <b>${r.conDescuento}</b></span>`,
+  ];
+  if (r.convertidos) chips.push(`<span class="chip">${resolv(T('chips.convertidos'))}: <b>${r.convertidos}</b> a ${DATOS.fx.tasa.toFixed(4)} (${fFechaCorta(DATOS.fx.obtenidoEn)})</span>`);
+  if (r.sinPrecio) chips.push(`<span class="chip" style="border-color:#dcc39a;background:#f6eddd">${T('chips.sinConversion')}: <b>${r.sinPrecio}</b></span>`);
+  $('#meta-strip').innerHTML = chips.join('');
+}
+
+function renderKpis() {
+  const ps = DATOS.productos.filter((p) => isFinite(p.precio));
+  const precios = ps.map((p) => p.precio);
+  const med = mediana(precios);
+  const min = Math.min(...precios);
+  const max = Math.max(...precios);
+  const conDesc = ps.filter((p) => p.precioLista).length;
+  const tiendasConCat = new Set(ps.map((p) => p.tienda)).size;
+  const gratisPublicado = DATOS.envios.filter((e) => !/^No (publicado|observado)/.test(e.gratisDesde)).length;
+  const cards = [
+    { l: T('kpis.productos.l'), v: ps.length.toLocaleString(LOCALE), n: resolv(T('kpis.productos.n'), { n: tiendasConCat, fecha: fFechaCorta(DATOS.generadoEn) }) },
+    { l: T('kpis.mediana.l'), v: sMon(med), n: resolv(T('kpis.mediana.n'), { n: DATOS.resumen.convertidos, ext: EXT }) },
+    { l: T('kpis.rango.l'), v: `${sMonCorto(min)} – ${sMonCorto(max)}`, n: T('kpis.rango.n') },
+    { l: T('kpis.tachado.l'), v: `${conDesc} · ${Math.round((conDesc / ps.length) * 100)}%`, n: T('kpis.tachado.n') },
+    { l: T('kpis.fuentes.l'), v: `${DATOS.resumen.fuentesOk} / ${DATOS.resumen.fuentesTotal}`, n: resolv(T('kpis.fuentes.n'), { a: tiendasConCat, b: DATOS.resumen.fuentesTotal, c: DATOS.resumen.fuentesTotal - tiendasConCat }) },
+    { l: T('kpis.envio.l'), v: `${gratisPublicado} de ${DATOS.envios.length}`, n: T('kpis.envio.n') },
+  ];
+  $('#kpis-grid').innerHTML = cards.map((c) => `<div class="panel"><div class="k-label">${c.l}</div><div class="k-value">${c.v}</div><div class="k-note">${c.n}</div></div>`).join('');
+}
+
+function renderRangos() {
+  const ps = DATOS.productos.filter((p) => isFinite(p.precio));
+  const tope = Math.max(1, percentil(ps.map((p) => p.precio), 0.95));
+  const grupos = {};
+  ps.forEach((p) => (grupos[p.tienda] ||= []).push(p.precio));
+  const filas = Object.entries(grupos).map(([tienda, vals]) => ({
+    tienda,
+    min: Math.min(...vals),
+    max: Math.max(...vals),
+    med: mediana(vals),
+    n: vals.length,
+    propia: DATOS.fuentes.find((f) => f.id === tienda)?.rol === 'propia',
+  })).sort((a, b) => nombreTienda(a.tienda).localeCompare(nombreTienda(b.tienda), 'es'));
+
+  $('#range-list').innerHTML = filas.map((f) => {
+    const izq = Math.min(100, (f.min / tope) * 100);
+    const der = Math.min(100, (f.max / tope) * 100);
+    const med = Math.min(100, (f.med / tope) * 100);
+    const clip = f.max > tope;
+    return `<div class="range-row">
+      <div class="range-name">${escapeHtml(nombreTienda(f.tienda))}${f.propia ? `<span class="rol">${escapeHtml(EMPRESA_ROL)}</span>` : ''}<span class="rol" style="color:var(--muted)">${f.n} ${T('secciones.tramos.unidad')}</span></div>
+      <div class="range-track" role="img" aria-label="${escapeHtml(nombreTienda(f.tienda))}: de ${sMon(f.min)} a ${sMon(f.max)}, ${T('rangos.mediana')} ${sMon(f.med)}">
+        <div class="range-fill${f.propia ? ' propia' : ''}" style="left:${izq}%;width:${Math.max(1.5, der - izq)}%"></div>
+        <div class="range-median" style="left:${med}%"></div>
+      </div>
+      <div class="range-vals">${clip ? '▶ ' : ''}<b>${sMon(f.med)}</b> ${T('rangos.mediana')}<br>${T('rangos.minText')} ${sMonCorto(f.min)} · ${T('rangos.maxText')} ${sMonCorto(f.max)}</div>
+    </div>`;
+  }).join('');
+  $('#range-note').textContent = resolv(T('rangos.nota'), { tope: sMon(tope) });
+}
+
+function renderTramos() {
+  $('#tramo-legend').innerHTML = TRAMOS.map((t) => `<span><i class="sw" style="background:${t.color}"></i>${t.etq}</span>`).join('');
+  const grupos = {};
+  DATOS.productos.forEach((p) => (grupos[p.tienda] ||= []).push(p.precio));
+  const filas = Object.entries(grupos).sort((a, b) => nombreTienda(a[0]).localeCompare(nombreTienda(b[0]), 'es'));
+  $('#tramo-list').innerHTML = filas.map(([tienda, vals]) => {
+    const unidad = T('secciones.tramos.unidad') || 'productos';
+    const segs = TRAMOS.map((t) => {
+      const n = vals.filter((v) => v >= t.min && v < t.max).length;
+      const pct = (n / vals.length) * 100;
+      if (!n) return '';
+      return `<div class="tramo-seg" aria-hidden="true" style="width:${pct}%;background:${t.color}" title="${t.etq}: ${n} ${unidad} (${Math.round(pct)}%)">${pct >= 9 ? Math.round(pct) + '%' : ''}</div>`;
+    }).join('');
+    const resumen = TRAMOS.map((t) => {
+      const n = vals.filter((v) => v >= t.min && v < t.max).length;
+      return n ? `${t.etq}: ${n} (${Math.round((n / vals.length) * 100)}%)` : '';
+    }).filter(Boolean).join('; ');
+    return `<div class="tramo-row"><div class="range-name">${escapeHtml(nombreTienda(tienda))}<span class="rol" style="color:var(--muted)">${vals.length} ${unidad}</span></div><div class="tramo-bar" role="img" aria-label="${escapeHtml(nombreTienda(tienda))}: ${escapeHtml(resumen)}">${segs}</div></div>`;
+  }).join('');
+}
+
+function renderEnvios() {
+  const cols = ['colTienda', 'colCosto', 'colGratis', 'colTiempo', 'colFuente'].map((k) => T('secciones.envios.' + k));
+  $('#envios-body').innerHTML = DATOS.envios.map((e) => {
+    const estado = e.estado === 'ok'
+      ? (e.cambioDetectado ? `<span class="badge warn">${T('secciones.envios.badgeCambio')}</span>` : `<span class="badge ok">${T('secciones.envios.badgeOk')}</span>`)
+      : `<span class="badge err">${T('secciones.envios.badgeCaida')}</span>`;
+    const fecha = e.estado === 'ok' ? fFechaCorta(e.verificadoEn) : (e.observadoEn || '—');
+    return `<tr>
+      <td data-label="${cols[0]}"><b>${escapeHtml(e.nombre)}</b></td>
+      <td data-label="${cols[1]}">${escapeHtml(e.costoLima)}</td>
+      <td data-label="${cols[2]}">${escapeHtml(e.gratisDesde)}</td>
+      <td data-label="${cols[3]}">${escapeHtml(e.tiempo)}</td>
+      <td data-label="${cols[4]}"><a href="${e.fuente}" target="_blank" rel="noopener">${new URL(e.fuente).hostname.replace('www.', '')} ↗</a><br>${estado} <span style="font-size:11px;color:var(--muted)">verificado ${fecha}</span></td>
+    </tr>`;
+  }).join('');
+  const caidas = DATOS.envios.filter((e) => e.estado !== 'ok').length;
+  const cambios = DATOS.envios.filter((e) => e.cambioDetectado).length;
+  const partes = [resolv(T('secciones.envios.nota'), { fecha: DATOS.envios[0]?.observadoEn || '—' })];
+  if (caidas) partes.push(resolv(T('secciones.envios.notaCaidas'), { n: caidas }));
+  if (cambios) partes.push(resolv(T('secciones.envios.notaCambios'), { n: cambios }));
+  $('#envios-note').textContent = partes.join(' ');
+}
+
+function renderLecturas() {
+  const lt = (k) => T('secciones.lecturas.' + k);
+  const ps = DATOS.productos.filter((p) => isFinite(p.precio));
+  const propia = ps.filter((p) => p.tienda === TIENDA_PROPIA);
+  const resto = ps.filter((p) => p.tienda !== TIENDA_PROPIA);
+  const medPropia = mediana(propia.map((p) => p.precio));
+  const medResto = mediana(resto.map((p) => p.precio));
+  const dif = medPropia && medResto ? Math.round(((medPropia - medResto) / medResto) * 100) : null;
+
+  const conDesc = {};
+  ps.forEach((p) => { if (p.precioLista) conDesc[p.tienda] = (conDesc[p.tienda] || 0) + 1; });
+  const totales = {};
+  ps.forEach((p) => (totales[p.tienda] = (totales[p.tienda] || 0) + 1));
+  const topPromo = Object.entries(conDesc).map(([t, n]) => [t, n, Math.round((n / totales[t]) * 100)]).sort((a, b) => b[2] - a[2])[0];
+
+  const altoMin = cfg.tramoSegAlto || TRAMOS[TRAMOS.length - 1]?.min || 1000;
+  const etqAlto = TRAMOS[TRAMOS.length - 1]?.etq || sMon(altoMin);
+  const altos = {};
+  ps.filter((p) => p.precio >= altoMin).forEach((p) => (altos[p.tienda] = (altos[p.tienda] || 0) + 1));
+  const altosTop = Object.entries(altos).sort((a, b) => b[1] - a[1]);
+  const nAltosPropia = altos[TIENDA_PROPIA] || 0;
+
+  const gratis = DATOS.envios.filter((e) => !/^No (publicado|observado)/.test(e.gratisDesde));
+  const sinCosto = DATOS.envios.filter((e) => /no (publicado|observado)|se calcula|por cotizar|no publica/i.test(e.costoLima) && !gratis.includes(e));
+
+  const items = [
+    {
+      h: dif == null ? resolv(lt('sinBase')) : resolv(dif >= 0 ? lt('nuestraMedianaArriba') : lt('nuestraMedianaAbajo'), { dif: Math.abs(dif) }),
+      p: dif == null
+        ? resolv(lt('sinBaseTexto'))
+        : resolv(lt('medianaTexto'), { propia: EMPRESA_NOMBRE, medPropia: sMon(medPropia), medResto: sMon(medResto), n: ps.length - propia.length }),
+    },
+    {
+      h: topPromo ? resolv(lt('masTachado'), { tienda: nombreTienda(topPromo[0]) }) : lt('sinTachado'),
+      p: topPromo
+        ? resolv(lt('tachadoTexto'), { tienda: nombreTienda(topPromo[0]), pct: topPromo[2], a: topPromo[1], b: totales[topPromo[0]], total: ps.filter((p) => p.precioLista).length, n: ps.length })
+        : lt('tachadoTextoNo'),
+    },
+    {
+      h: resolv(lt('segmentoAlto'), { etq: etqAlto, n: ps.filter((p) => p.precio >= altoMin).length }),
+      p: altosTop.length
+        ? resolv(lt('segmentoAltoTexto'), { tiendas: altosTop.slice(0, 4).map(([t, n]) => `${nombreTienda(t)} ${n}`).join(' · '), propia: EMPRESA_NOMBRE, n: nAltosPropia })
+        : resolv(lt('segmentoAltoTextoNo'), { etq: etqAlto }),
+    },
+    {
+      h: resolv(lt('envioTitulo'), { n: gratis.length, m: DATOS.envios.length }),
+      p: resolv(lt('envioTexto'), { gratis: gratis.map((e) => `${e.nombre} (${e.gratisDesde})`).join(' · '), n: sinCosto.length, mercado: cfg.mercado || '', sinCosto: sinCosto.map((e) => e.nombre).join(', ') }),
+    },
+  ];
+  if (DATOS.resumen.convertidos) {
+    const tiendasExt = [...new Set(DATOS.productos.filter((p) => p.convertido).map((p) => p.tienda))].map((i) => nombreTienda(i)).join(', ');
+    items.push({
+      h: resolv(lt('extTitulo'), { n: DATOS.resumen.convertidos, ext: EXT }),
+      p: DATOS.resumen.convertidos
+        ? resolv(lt('extTexto'), { tiendas: tiendasExt, n: DATOS.resumen.convertidos, loc: COD, ext: EXT, tasa: DATOS.fx.tasa.toFixed(4), fuente: DATOS.fx.fuente, fecha: fFechaCorta(DATOS.fx.obtenidoEn) })
+        : (DATOS.fx.tasa
+          ? resolv(lt('extTextoActualizado'), { ext: EXT, tasa: DATOS.fx.tasa.toFixed(4), fuente: DATOS.fx.fuente })
+          : resolv(lt('extTextoNunca'), { ext: EXT })),
+    });
+  }
+  $('#lecturas-grid').innerHTML = items.map((i) => `<article class="lectura"><h3>${i.h}</h3><p>${i.p}</p><span class="calc">${resolv(lt('calc'), { fecha: fFechaCorta(DATOS.generadoEn) })}</span></article>`).join('');
+}
+
+function renderMetodologia() {
+  $('#dlg-leido').textContent = resolv(T('dialogo.leido'), { fecha: fFecha(DATOS.generadoEn), zona: ZONA, s: Math.round((DATOS.duracionMs || 0) / 1000) });
+  $('#dlg-fuentes').innerHTML = DATOS.fuentes.map((f) => {
+    const badge = f.estado === 'ok' && f.productos > 0
+      ? '<span class="badge ok">OK</span>'
+      : f.estado === 'ok'
+        ? '<span class="badge warn">Sin catálogo de precios</span>'
+        : f.estado === 'error'
+          ? '<span class="badge err">Error · datos anteriores</span>'
+          : '<span class="badge warn">Sin catálogo</span>';
+    return `<li><b>${escapeHtml(f.nombre)}</b> · ${escapeHtml(f.plataforma)} ${badge}
+      <div style="font-size:12px;color:var(--muted);margin-top:5px">
+        Segmento leído: ${escapeHtml(f.categoria || '—')} · Fuente de datos: <code>${escapeHtml(f.fuenteDato || '—')}</code> ·
+        ${f.productos} producto(s) · lectura ${fFecha(f.leidoEn)}${f.datosDe ? ' · conservando datos del ' + fFechaCorta(f.datosDe) : ''}${f.error ? ' · error: ' + escapeHtml(f.error) : ''}
+        ${f.nota ? '<br>' + escapeHtml(f.nota) : ''}
+        <br><a href="${f.url}" target="_blank" rel="noopener">${f.url} ↗</a>
+      </div></li>`;
+  }).join('');
+  const tiendasExt = [...new Set(DATOS.productos.filter((p) => p.convertido).map((p) => p.tienda))].map((i) => nombreTienda(i)).join(', ');
+  $('#dlg-fx').innerHTML = DATOS.fx.ok
+    ? resolv(T('dialogo.fxNueva'), { ext: EXT, tasa: DATOS.fx.tasa, loc: COD, fuente: DATOS.fx.fuente, fecha: fFecha(DATOS.fx.obtenidoEn), tiendas: tiendasExt })
+    : (DATOS.fx.tasa
+      ? resolv(T('dialogo.fxAnterior'), { ext: EXT, tasa: DATOS.fx.tasa, loc: COD, advertencia: DATOS.fx.advertencia || '' })
+      : resolv(T('dialogo.fxNinguna'), { ext: EXT, loc: COD, advertencia: DATOS.fx.advertencia || '' }));
+
+  $('#dlg-distincion').innerHTML = `
+    <li><b>${T('dialogo.obs')}</b> ${T('dialogo.obsTexto')}</li>
+    <li><b>${T('dialogo.calc')}</b> ${T('dialogo.calcTexto')}</li>
+    <li><b>${T('dialogo.noHace')}</b> ${T('dialogo.noHaceTexto')}</li>`;
+
+  const limitaciones = T('dialogo.limitaciones');
+  $('#dlg-limitaciones').innerHTML = (Array.isArray(limitaciones) ? limitaciones : []).map((l) => `<li>${l}</li>`).join('');
+}
+
+function poblarTiendas() {
+  const ids = [...new Set(DATOS.productos.map((p) => p.tienda))];
+  const opciones = [`<option value="todas">${escapeHtml(T('secciones.catalogo.tiendaTodas') || 'Todas las tiendas')}</option>`]
+    .concat(ids.map((id) => `<option value="${id}">${escapeHtml(nombreTienda(id))}</option>`));
+  $('#f-tienda').innerHTML = opciones.join('');
+}
+
+function llenarSegmentoSelect() {
+  const s = $('#f-segmento');
+  if (!s) return;
+  const segs = (cfg.segmentos || []).filter((seg) => DATOS.productos.some((p) => p.segmento === seg.id));
+  const opciones = [`<option value="todas">${escapeHtml(T('secciones.catalogo.segmentoTodas') || 'Todos los segmentos')}</option>`]
+    .concat(segs.map((seg) => `<option value="${seg.id}">${escapeHtml(seg.etiqueta)}</option>`));
+  s.innerHTML = opciones.join('');
+}
+
+function filtrar() {
+  const q = norm(F.q);
+  let out = DATOS.productos.filter((p) => {
+    if (F.tienda !== 'todas' && p.tienda !== F.tienda) return false;
+    if (F.segmento !== 'todas' && p.segmento !== F.segmento) return false;
+    if (F.disponible && p.disponible !== true) return false;
+    if (F.tramo !== 'todas') {
+      const t = TRAMOS.find((t) => t.id === F.tramo);
+      if (t && !(p.precio >= t.min && p.precio < t.max)) return false;
+    }
+    if (q && !(norm(p.nombre).includes(q) || norm(p.marca).includes(q))) return false;
+    return true;
+  });
+  const ord = {
+    'precio-desc': (a, b) => b.precio - a.precio,
+    'precio-asc': (a, b) => a.precio - b.precio,
+    tienda: (a, b) => nombreTienda(a.tienda).localeCompare(nombreTienda(b.tienda), 'es') || b.precio - a.precio,
+    nombre: (a, b) => a.nombre.localeCompare(b.nombre, 'es'),
+  }[F.orden];
+  return out.sort(ord);
+}
+
+function pintarTabla() {
+  const colsCat = ['colTienda', 'colProducto', 'colPrecio', 'colPublicado', 'colPrecioAnterior', 'colEstado', 'colFuente'].map((k) => resolv(T('secciones.catalogo.' + k)));
+  const filas = FILA.slice(0, VISIBLES);
+  if (!FILA.length) {
+    $('#tabla-body').innerHTML = `<tr><td colspan="7" style="text-align:center;padding:34px;color:var(--muted)">${T('secciones.catalogo.sinCoincidencias')} <button type="button" class="button secundario" id="btn-limpiar">${T('secciones.catalogo.limpiarFiltros')}</button></td></tr>`;
+    $('#conteo').textContent = resolv(T('secciones.catalogo.conteoVacio'), { n: DATOS.productos.length });
+    $('#btn-mas').hidden = true;
+    document.getElementById('btn-limpiar').addEventListener('click', () => {
+      F.q = ''; F.tienda = 'todas'; F.tramo = 'todas'; F.orden = 'precio-desc'; F.disponible = false; F.segmento = 'todas';
+      $('#f-buscar').value = ''; $('#f-tienda').value = 'todas'; $('#f-tramo').value = 'todas'; $('#f-orden').value = 'precio-desc'; $('#f-disponible').checked = false; $('#f-segmento').value = 'todas';
+      aplicarFiltros();
+    });
+    return;
+  }
+  $('#tabla-body').innerHTML = filas.map((p) => {
+    const t = nombreTienda(p.tienda);
+    const estado = p.disponible === true ? `<span class="badge ok">${T('secciones.catalogo.disponible')}</span>`
+      : p.disponible === false ? `<span class="badge err">${T('secciones.catalogo.agotado')}</span>`
+        : `<span class="badge">${T('secciones.catalogo.noPublicado')}</span>`;
+    const publicado = p.convertido
+      ? `${SIM_E} ${FORMATO.format(p.precioOriginal)}<span class="precio-conv">${resolv(T('secciones.catalogo.publicadoEn'), { ext: EXT })}</span>`
+      : `${p.moneda === EXT ? SIM_E : SIM} ${FORMATO.format(p.precio)}`;
+    const anterior = p.precioLista ? sMon(p.precioLista) : '—';
+    return `<tr>
+      <td data-label="${colsCat[0]}">${escapeHtml(t)}</td>
+      <td data-label="${colsCat[1]}"><div class="prod">${p.imagen ? `<img class="thumb" src="${p.imagen}" alt="" loading="lazy" decoding="async">` : ''}<div><div class="p-nombre">${escapeHtml(p.nombre)}</div><div class="p-marca">${escapeHtml(p.marca || p.categoria || '')}</div></div></div></td>
+      <td data-label="${colsCat[2]}" class="num"><b>${p.convertido ? '≈ ' : ''}${sMon(p.precio)}</b></td>
+      <td data-label="${colsCat[3]}" class="num">${publicado}</td>
+      <td data-label="${colsCat[4]}" class="num">${anterior}</td>
+      <td data-label="${colsCat[5]}">${estado}</td>
+      <td data-label="${colsCat[6]}">${p.url ? `<a href="${p.url}" target="_blank" rel="noopener">${T('secciones.catalogo.verFicha')} ↗</a>` : '—'}</td>
+    </tr>`;
+  }).join('');
+  $('#conteo').textContent = resolv(T('secciones.catalogo.conteo'), { a: Math.min(VISIBLES, FILA.length), b: FILA.length, n: DATOS.productos.length });
+  $('#btn-mas').hidden = VISIBLES >= FILA.length;
+}
+
+function aplicarFiltros() {
+  FILA = filtrar();
+  VISIBLES = 50;
+  pintarTabla();
+}
+
+function csv() {
+  const sep = ';';
+  const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const cols = (cfg.exportacion && cfg.exportacion.csvColumnas) || ['Tienda', 'Producto', 'Marca', `Precio ${COD}`, 'Publicado', `Precio anterior ${COD}`, 'Disponible', 'Segmento', 'URL', 'Lectura'];
+  const cab = cols.map((c) => c.replace('{CODIGO_LOCAL}', COD));
+  const lineas = [cab.map(esc).join(sep)];
+  const conSegmento = cols.some((c) => /^Segmento/i.test(c));
+  const conCat = cols.some((c) => /^Categor/i.test(c));
+  filtrar().forEach((p) => {
+    const base = [
+      nombreTienda(p.tienda), p.nombre, p.marca || '', p.precio.toFixed(2),
+      p.convertido ? `${SIM_E}${p.precioOriginal.toFixed(2)}` : (p.moneda === EXT ? `${SIM_E}${p.precio.toFixed(2)}` : `${SIM}${p.precio.toFixed(2)}`),
+      p.precioLista ? p.precioLista.toFixed(2) : '',
+      p.disponible === true ? 'Sí' : p.disponible === false ? 'No' : 'No publicado',
+      p.url || '', DATOS.generadoEn,
+    ];
+    if (conSegmento) base.splice(7, 0, p.segmento ? ((cfg.segmentos || []).find((s) => s.id === p.segmento)?.etiqueta || p.segmento) : '');
+    if (conCat) base.splice(8, 0, p.categoria || '');
+    lineas.push(base.map(esc).join(sep));
+  });
+  const blob = new Blob(['\ufeff' + lineas.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const base = (cfg.exportacion && cfg.exportacion.csvBase) || 'precios-competencia-';
+  a.download = base + DATOS.generadoEn.slice(0, 10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+$('#f-buscar').addEventListener('input', (e) => { F.q = e.target.value; aplicarFiltros(); });
+$('#f-tienda').addEventListener('change', (e) => { F.tienda = e.target.value; aplicarFiltros(); });
+$('#f-segmento').addEventListener('change', (e) => { F.segmento = e.target.value; aplicarFiltros(); });
+$('#f-tramo').addEventListener('change', (e) => { F.tramo = e.target.value; aplicarFiltros(); });
+$('#f-orden').addEventListener('change', (e) => { F.orden = e.target.value; aplicarFiltros(); });
+$('#f-disponible').addEventListener('change', (e) => { F.disponible = e.target.checked; aplicarFiltros(); });
+$('#btn-mas').addEventListener('click', () => { VISIBLES += 50; pintarTabla(); });
+$('#btn-csv').addEventListener('click', csv);
+const dlg = $('#dlg-metodologia');
+const abrirDlg = () => (dlg.showModal ? dlg.showModal() : (dlg.open = true));
+$('#btn-metodologia').addEventListener('click', abrirDlg);
+$('#btn-metodologia-top').addEventListener('click', abrirDlg);
+$('#btn-cerrar').addEventListener('click', () => dlg.close());
+dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+cargar();
+</script>
+</body>
+</html>
