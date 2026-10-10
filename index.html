@@ -103,6 +103,43 @@ ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
 .estados span{display:inline-block;margin-right:8px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cargando{padding:60px 0;text-align:center;color:var(--muted);font:19px Georgia,serif}
+/* consultas (chat) */
+#dlg-chat{width:min(720px,calc(100% - 28px))}
+.chat-inner{display:flex;flex-direction:column;gap:14px;padding:24px;max-height:86vh}
+.chat-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.chat-intro{font-size:13px;color:var(--muted);margin:0}
+.chat-ejemplos{display:flex;flex-wrap:wrap;gap:8px}
+#consulta-ejemplos{margin-top:22px}
+.chat-chip{background:var(--cream);border:1px solid var(--line);color:#4c463d;font:12px inherit;padding:8px 11px;cursor:pointer;text-align:left}
+.chat-chip:hover{background:#e0d7c6}
+.chat-ia{border:1px solid var(--line);background:#fbf9f4;padding:11px 13px}
+.chat-ia summary{cursor:pointer;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-deep);font-weight:600}
+.chat-ia-body{padding-top:13px;display:flex;flex-direction:column;gap:12px}
+.chat-ia-body .campo{margin:0}
+.chat-log{flex:1;min-height:190px;max-height:46vh;overflow-y:auto;border:1px solid var(--line);background:#fbf9f4;padding:14px;display:flex;flex-direction:column;gap:14px;overscroll-behavior:contain}
+.chat-msg{display:flex;flex-direction:column;gap:4px;min-width:0}
+.chat-rol{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.chat-u{align-items:flex-end}
+.chat-u .chat-rol{color:var(--gold-deep)}
+.chat-bubble{background:#fffdf9;border:1px solid var(--line);padding:11px 13px;font-size:14px;line-height:1.55;overflow-wrap:anywhere;min-width:0}
+.chat-u .chat-bubble{background:var(--ink);color:#f2ede3;border-color:var(--ink);max-width:88%}
+.chat-a .chat-bubble p{margin:0 0 8px}
+.chat-a .chat-bubble p:last-child{margin-bottom:0}
+.chat-sub{font-size:12px;color:var(--muted)}
+.chat-cita{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-deep);border-top:1px dashed var(--line);padding-top:7px;margin-top:9px}
+.chat-nota{font-size:12px;color:var(--warn);margin:0}
+.chat-espera{font-size:13px;color:var(--muted)}
+.chat-tabla-wrap{overflow-x:auto;margin-top:9px}
+.chat-tabla{border-collapse:collapse;width:100%;font-size:12px}
+.chat-tabla th,.chat-tabla td{padding:6px 9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.chat-tabla th{background:var(--cream);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#4c463d}
+.chat-tabla td.num,.chat-tabla th.num{text-align:right;font-variant-numeric:tabular-nums}
+.chat-tabla tbody tr:last-child td{border-bottom:0}
+.chat-help{margin:6px 0 0;padding-left:20px}
+.chat-help li{font-size:13px;color:#4c463d;margin-bottom:4px}
+.chat-form{display:flex;gap:10px}
+.chat-form input{flex:1;min-width:0;font:15px inherit;padding:12px;border:1px solid #8a8175;background:#fffdf9;color:var(--ink)}
+@media(max-width:780px){.chat-inner{padding:18px}.chat-form{flex-wrap:wrap}.chat-form .button{width:100%}}
 :focus-visible{outline:3px solid #8a6e3f;outline-offset:3px}
 @media(max-width:640px){.grid-kpis{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:400px){.grid-kpis{grid-template-columns:1fr}}
@@ -138,7 +175,10 @@ ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
 <body>
 <header>
   <img id="logo-marca" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='20' viewBox='0 0 200 20'%3E%3Ctext x='0' y='15' font-family='Arial,sans-serif' font-size='14' font-weight='700' fill='%23ffffff' letter-spacing='1'%3EMEDIA LAB%3C/text%3E%3C/svg%3E" alt="Media Lab · Panel interno de precios">
-  <button type="button" id="btn-metodologia-top">Metodología y fuentes</button>
+  <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+    <button type="button" id="btn-chat-top">Consultar datos</button>
+    <button type="button" id="btn-metodologia-top">Metodología y fuentes</button>
+  </div>
 </header>
 <div class="demo-ribbon" id="demo-ribbon">DATOS PÚBLICOS DE LAS TIENDAS · LECTURA DIARIA AUTOMÁTICA · SOLO PARA USO INTERNO</div>
 
@@ -280,9 +320,23 @@ ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
   </section>
 
   <section id="lecturas" aria-labelledby="h-lecturas">
-    <p class="eyebrow">Interpretación</p>
+    <p class="eyebrow" id="lecturas-eyebrow">Interpretación</p>
     <h2 id="h-lecturas">Lecturas del corte actual</h2>
     <div class="lecturas" id="lecturas-grid"></div>
+  </section>
+
+  <section id="consulta" aria-labelledby="h-consulta">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" id="consulta-eyebrow">Consulta asistida</p>
+        <h2 id="h-consulta">Pregúntale a los datos</h2>
+      </div>
+      <p id="consulta-desc">Escribe una pregunta en lenguaje natural y el panel responde calculando sobre la última lectura.</p>
+    </div>
+    <div class="chat-ejemplos" id="consulta-ejemplos"></div>
+    <div class="acciones">
+      <button type="button" class="button" id="btn-abrir-chat">Abrir consultas</button>
+    </div>
   </section>
 </main>
 
@@ -318,6 +372,48 @@ ul.fuentes li b{font-family:Georgia,serif;font-size:15px}
     <div class="dialog-actions">
       <button type="button" class="button" id="btn-cerrar">Cerrar</button>
     </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-chat" aria-labelledby="chat-title">
+  <div class="chat-inner">
+    <div class="chat-head">
+      <div>
+        <p class="eyebrow" id="chat-eyebrow">Consulta asistida</p>
+        <h2 id="chat-title">Pregúntale a los datos</h2>
+      </div>
+      <button type="button" class="button secundario" id="btn-chat-cerrar">Cerrar</button>
+    </div>
+    <p class="chat-intro" id="chat-intro"></p>
+    <div class="chat-ejemplos" id="chat-ejemplos"></div>
+
+    <details class="chat-ia" id="chat-ia">
+      <summary id="chat-ia-summary">Modo IA (opcional)</summary>
+      <div class="chat-ia-body">
+        <p class="note" id="chat-ia-ayuda" style="margin:0"></p>
+        <div class="campo">
+          <label for="ia-endpoint" id="lab-ia-endpoint">URL del proxy IA</label>
+          <input type="url" id="ia-endpoint" placeholder="https://tu-proxy.ejemplo.workers.dev" autocomplete="off">
+        </div>
+        <div class="campo check">
+          <input type="checkbox" id="ia-activar">
+          <label for="ia-activar" id="lab-ia-activar">Usar IA externa (proxy)</label>
+        </div>
+        <div class="acciones" style="margin-top:0">
+          <button type="button" class="button secundario" id="btn-ia-guardar">Guardar</button>
+          <span class="note" id="ia-estado" style="margin:0" aria-live="polite"></span>
+        </div>
+      </div>
+    </details>
+
+    <div class="chat-log" id="chat-log" role="log" tabindex="0" aria-live="polite" aria-relevant="additions text" aria-label="Conversación"></div>
+
+    <form class="chat-form" id="chat-form">
+      <label class="sr-only" for="chat-input" id="lab-chat-input">Escribe tu consulta</label>
+      <input type="text" id="chat-input" autocomplete="off" placeholder="Ej.: ¿cuál es el iPhone más barato?">
+      <button type="submit" class="button" id="chat-enviar">Consultar</button>
+    </form>
+    <p class="note" id="chat-aviso" style="margin:0" aria-live="polite"></p>
   </div>
 </dialog>
 
@@ -458,6 +554,7 @@ function aplicarTexto() {
   const oSel = $('#f-orden');
   const ordKeys = ['ordenPrecioDesc', 'ordenPrecioAsc', 'ordenTienda', 'ordenNombre'];
   if (oSel) ordKeys.forEach((k, i) => { const o = oSel.options[i + 1]; const t = T('secciones.catalogo.' + k); if (o && t) o.textContent = t; });
+  aplicarTextoChat();
 }
 
 function llenarTramoSelect() {
@@ -822,6 +919,292 @@ function csv() {
   a.click();
   URL.revokeObjectURL(a.href);
 }
+
+/* ================= Consultas (chat) ================= */
+const CHAT_LS_ENDPOINT = 'mlos-ia-endpoint';
+const CHAT_LS_ACTIVO = 'mlos-ia-activo';
+const CHAT_STOP = new Set(['de','del','la','el','los','las','un','una','unos','unas','y','o','a','en','con','sin','por','para','que','cual','cuales','cuanto','cuanta','cuantos','cuantas','como','donde','cuando','es','son','esta','estan','hay','tiene','tienen','me','mi','tu','se','su','al','lo','muy','mas','menos','precio','precios','costo','costos','cuesta','cuestan','vale','valen','equipo','equipos','celular','celulares','telefono','telefonos','movil','moviles','modelo','modelos','marca','marcas','capacidad','color','colores','operador','operadores','tienda','tiendas','plataforma','catalogo','panel','venta','soles','sol','s','gb','tb','dame','dime','muestra','muestrame','lista','listar','ver','orden','ordenar','ordenado','ascendente','descendente','promedio','mediana','median','media','gama','rango','comparar','compara','comparacion','versus','vs','entre','sobre','mejor','peor','peores','barato','barata','baratos','baratas','caro','cara','caros','caras','economico','economica','economicos','costoso','alto','alta','baja','disponible','disponibles','descuento','descuentos','oferta','ofertas','promocion','promociones','rebaja','rebajas','disponibilidad','anterior','publicado','publicados','tachado','top','ranking','ayuda','hola','cada','todos','todas','nos','quiero','saber','sabes','puedes','puede','aplicar','stock']);
+const CHAT_NUM = (v) => parseFloat(String(v).replace(/[.,](?=\d{3}(\b|$))/g, '').replace(',', '.'));
+
+function porTienda(ps) { const g = {}; ps.forEach((p) => (g[p.tienda] ||= []).push(p)); return g; }
+const etqSeg = (id) => { const s = (cfg.segmentos || []).find((x) => x.id === id); return s ? s.etiqueta : id; };
+const filaProd = (p) => [`<b>${escapeHtml(p.nombre)}</b>`, escapeHtml(nombreTienda(p.tienda)), sMon(p.precio)];
+function tablaChat(cols, rows) {
+  const th = cols.map((c) => `<th${c.num ? ' class="num"' : ''}>${escapeHtml(c.h)}</th>`).join('');
+  const body = rows.map((r) => `<tr>${r.map((c, i) => `<td${cols[i] && cols[i].num ? ' class="num"' : ''}>${c}</td>`).join('')}</tr>`).join('');
+  return `<div class="chat-tabla-wrap"><table class="chat-tabla"><thead><tr>${th}</tr></thead><tbody>${body}</tbody></table></div>`;
+}
+const C_PROD = [{ h: 'Equipo' }, { h: 'Operador' }, { h: 'Precio', num: true }];
+
+function preguntaTokens(nq) {
+  const ent = new Set();
+  (DATOS.fuentes || []).forEach((ft) => { ent.add(norm(ft.id)); norm(ft.nombre).split(/\s+/).forEach((w) => ent.add(w)); });
+  (cfg.segmentos || []).forEach((sg) => (sg.patrones || []).forEach((pt) => norm(pt).split(/\s+/).forEach((w) => { if (w) ent.add(w); })));
+  return norm(nq).replace(/[^a-z0-9\s%]/g, ' ').split(/\s+/)
+    .filter((t) => t.length > 1 && !CHAT_STOP.has(t) && !ent.has(t) && !/^\d+$/.test(t));
+}
+function detectarRango(nq) {
+  let m;
+  if ((m = nq.match(/(?:entre|de|desde)\s*(?:s\/)?\s*(\d[\d.,]*)\s*(?:y|a|hasta|-)\s*(\d[\d.,]*)/))) return { min: CHAT_NUM(m[1]), max: CHAT_NUM(m[2]) };
+  if ((m = nq.match(/(?:menos de|hasta|por debajo de|inferior a|no mas de|bajo)\s*(?:s\/)?\s*(\d[\d.,]*)/))) return { max: CHAT_NUM(m[1]) };
+  if ((m = nq.match(/(?:mas de|sobre|superior a|arriba de|encima de|desde)\s*(?:s\/)?\s*(\d[\d.,]*)/))) return { min: CHAT_NUM(m[1]) };
+  return {};
+}
+function detectarIntent(nq) {
+  if (/ayuda|que puedes|que sabes|como funciona|help|que pregunto/.test(nq)) return 'ayuda';
+  if (/compar|versus|\bvs\b|diferenc|frente a|cual conviene|mejor precio/.test(nq)) return 'comparar';
+  if (/descuent|oferta|rebaj|bajo de precio|promo|precio anterior|tachado/.test(nq)) return 'descuento';
+  if (/disponib|stock|agotad|en venta/.test(nq)) return 'disponible';
+  if (/promedi|mediana|median|media\b/.test(nq)) return 'promedio';
+  if (/cuant|cantidad|numero de/.test(nq)) return 'contar';
+  if (/mas caro|mayor precio|premium|gama alta|mas caros|top.*caro/.test(nq)) return 'maximo';
+  if (/mas barato|menor precio|mas economic|gama baja|de entrada|mas baratos|barato/.test(nq)) return 'minimo';
+  if (/top|ranking|los \d+/.test(nq)) return 'top';
+  if (/rango|diferencia de precio|precio.*entre/.test(nq)) return 'rango';
+  return 'listar';
+}
+function detectarFiltros(nq) {
+  const tiendas = (DATOS.fuentes || []).filter((ft) => {
+    const id = norm(ft.id), nom = norm(ft.nombre);
+    return new RegExp('\\b' + id + '\\b').test(nq) || new RegExp('\\b' + nom.replace(/\s+/g, '\\s+') + '\\b').test(nq);
+  }).map((ft) => ft.id);
+  let segmento = null;
+  for (const s of (cfg.segmentos || [])) { if ((s.patrones || []).some((pt) => nq.includes(norm(pt)))) { segmento = s.id; break; } }
+  const rango = detectarRango(nq);
+  const tokens = preguntaTokens(nq);
+  const mTop = nq.match(/\btop\s*(\d+)|los\s*(\d+)\b|(\d+)\s*(?:mas|mejores)/);
+  const topN = mTop ? parseInt(mTop[1] || mTop[2] || mTop[3], 10) : null;
+  return { tiendas, segmento, min: rango.min != null ? rango.min : null, max: rango.max != null ? rango.max : null, tokens, topN };
+}
+function filtrarPorFiltros(f) {
+  let ps = DATOS.productos.filter((p) => isFinite(p.precio));
+  if (f.tiendas && f.tiendas.length) ps = ps.filter((p) => f.tiendas.includes(p.tienda));
+  if (f.segmento) ps = ps.filter((p) => p.segmento === f.segmento);
+  if (f.min != null) ps = ps.filter((p) => p.precio >= f.min);
+  if (f.max != null) ps = ps.filter((p) => p.precio <= f.max);
+  const hayEntidad = (f.tiendas && f.tiendas.length) || f.segmento || f.min != null || f.max != null;
+  if (f.tokens && f.tokens.length) {
+    const conTok = ps.filter((p) => { const s = norm(p.nombre + ' ' + (p.marca || '')); return f.tokens.every((t) => s.includes(t)); });
+    if (conTok.length || !hayEntidad) return conTok;
+  }
+  return ps;
+}
+function ambitoTexto(f) {
+  const parts = [];
+  if (f.segmento) parts.push(' de ' + etqSeg(f.segmento));
+  if (f.tiendas && f.tiendas.length) parts.push(' en ' + f.tiendas.map(nombreTienda).join(', '));
+  if (f.min != null && f.max != null) parts.push(` entre ${sMon(f.min)} y ${sMon(f.max)}`);
+  else if (f.min != null) parts.push(' desde ' + sMon(f.min));
+  else if (f.max != null) parts.push(' hasta ' + sMon(f.max));
+  return parts.length ? parts.join('') : ' del catálogo';
+}
+function ayudaChat() {
+  const ej = Array.isArray(T('chat.ejemplos')) ? T('chat.ejemplos') : [];
+  return `<p>${escapeHtml(T('chat.ayudaTitulo'))}</p><ul class="chat-help">${ej.map((e) => `<li>${escapeHtml(e)}</li>`).join('')}</ul>`;
+}
+function extremoChat(ps, f, dir) {
+  const sorted = [...ps].sort((a, b) => (dir === 'min' ? a.precio - b.precio : b.precio - a.precio));
+  const best = sorted[0];
+  const pal = dir === 'min' ? 'más barato' : 'más caro';
+  let html = `<p>El equipo <b>${pal}</b>${ambitoTexto(f)} es <b>${escapeHtml(best.nombre)}</b>, en <b>${escapeHtml(nombreTienda(best.tienda))}</b>, a <b>${sMon(best.precio)}</b>.</p>`;
+  html += `<p class="chat-sub">${ps.length} equipo(s) en la selección · precio ${dir === 'min' ? 'desde' : 'hasta'} ${sMon(best.precio)}.</p>`;
+  html += tablaChat(C_PROD, sorted.slice(0, 8).map(filaProd));
+  return html;
+}
+function topChat(ps, f, asc) {
+  const n = f.topN || 10;
+  const sorted = [...ps].sort((a, b) => (asc ? a.precio - b.precio : b.precio - a.precio)).slice(0, n);
+  let html = `<p>Top ${sorted.length} ${asc ? 'más baratos' : 'más caros'}${ambitoTexto(f)}:</p>`;
+  html += tablaChat(C_PROD, sorted.map(filaProd));
+  return html;
+}
+function estadisticasChat(ps, f) {
+  const g = porTienda(ps), all = ps.map((p) => p.precio);
+  const avg = all.reduce((a, b) => a + b, 0) / all.length, med = mediana(all);
+  const filas = Object.entries(g).sort((a, b) => nombreTienda(a[0]).localeCompare(nombreTienda(b[0]), 'es')).map(([t, arr]) => {
+    const v = arr.map((p) => p.precio);
+    return [escapeHtml(nombreTienda(t)), String(arr.length), sMon(v.reduce((a, b) => a + b, 0) / v.length), sMon(mediana(v)), sMon(Math.min(...v)), sMon(Math.max(...v))];
+  });
+  let best = null;
+  Object.entries(g).forEach(([t, arr]) => { const m = mediana(arr.map((p) => p.precio)); if (best == null || m < best.m) best = { t, m }; });
+  let html = `<p><b>${ps.length}</b> equipos${ambitoTexto(f)}. Precio promedio <b>${sMon(avg)}</b> · mediana <b>${sMon(med)}</b>.</p>`;
+  if (Object.keys(g).length > 1 && best) html += `<p class="chat-sub">Menor mediana: <b>${escapeHtml(nombreTienda(best.t))}</b> (${sMon(best.m)}).</p>`;
+  html += tablaChat([{ h: 'Operador' }, { h: 'Equipos', num: true }, { h: 'Promedio', num: true }, { h: 'Mediana', num: true }, { h: 'Mín', num: true }, { h: 'Máx', num: true }], filas);
+  return html;
+}
+function contarChat(ps, f) {
+  const g = porTienda(ps);
+  const filas = Object.entries(g).sort((a, b) => nombreTienda(a[0]).localeCompare(nombreTienda(b[0]), 'es')).map(([t, arr]) => [escapeHtml(nombreTienda(t)), String(arr.length), Math.round((arr.length / ps.length) * 100) + '%']);
+  let html = `<p><b>${ps.length}</b> equipos${ambitoTexto(f)} en total.</p>`;
+  html += tablaChat([{ h: 'Operador' }, { h: 'Equipos', num: true }, { h: '% del total', num: true }], filas);
+  return html;
+}
+function rangoChat(ps, f) {
+  const v = ps.map((p) => p.precio);
+  let html = `<p><b>${ps.length}</b> equipos${ambitoTexto(f)}. Mínimo <b>${sMon(Math.min(...v))}</b> · mediana <b>${sMon(mediana(v))}</b> · máximo <b>${sMon(Math.max(...v))}</b>.</p>`;
+  const filas = Object.entries(porTienda(ps)).sort((a, b) => nombreTienda(a[0]).localeCompare(nombreTienda(b[0]), 'es')).map(([t, arr]) => {
+    const vv = arr.map((p) => p.precio);
+    return [escapeHtml(nombreTienda(t)), String(arr.length), sMon(Math.min(...vv)), sMon(mediana(vv)), sMon(Math.max(...vv))];
+  });
+  html += tablaChat([{ h: 'Operador' }, { h: 'Equipos', num: true }, { h: 'Mín', num: true }, { h: 'Mediana', num: true }, { h: 'Máx', num: true }], filas);
+  return html;
+}
+function busquedaChat(ps, f) {
+  const sorted = [...ps].sort((a, b) => a.precio - b.precio);
+  const v = ps.map((p) => p.precio);
+  let html = `<p><b>${ps.length}</b> coincidencia(s) para “${escapeHtml(f.tokens.join(' '))}”: de <b>${sMon(Math.min(...v))}</b> a <b>${sMon(Math.max(...v))}</b>.</p>`;
+  html += tablaChat(C_PROD, sorted.slice(0, 8).map(filaProd));
+  return html;
+}
+function descuentoChat(ps, f) {
+  const con = ps.filter((p) => p.precioLista && p.precioLista > p.precio);
+  if (!con.length) return `<p>Ninguno de los <b>${ps.length}</b> equipos${ambitoTexto(f)} publica un precio anterior mayor al de contado.</p>`;
+  const rows = con.map((p) => ({ p, pct: Math.round((1 - p.precio / p.precioLista) * 100) })).sort((a, b) => b.pct - a.pct).slice(0, 10)
+    .map((x) => [`<b>${escapeHtml(x.p.nombre)}</b>`, escapeHtml(nombreTienda(x.p.tienda)), sMon(x.p.precio), sMon(x.p.precioLista), x.pct + '%']);
+  let html = `<p><b>${con.length}</b> de ${ps.length} equipos (${Math.round((con.length / ps.length) * 100)}%)${ambitoTexto(f)} muestran un <b>precio anterior</b> mayor al de contado.</p>`;
+  html += `<p class="chat-sub">El “precio anterior” es la referencia que publica el operador; el % es la diferencia frente a ese valor, no un ahorro verificado.</p>`;
+  html += tablaChat([{ h: 'Equipo' }, { h: 'Operador' }, { h: 'Precio', num: true }, { h: 'Precio anterior', num: true }, { h: 'Dif.', num: true }], rows);
+  return html;
+}
+function disponibilidadChat(ps, f) {
+  const g = porTienda(ps);
+  const filas = Object.entries(g).sort((a, b) => nombreTienda(a[0]).localeCompare(nombreTienda(b[0]), 'es')).map(([t, arr]) => {
+    const disp = arr.filter((p) => p.disponible === true).length;
+    const ago = arr.filter((p) => p.disponible === false).length;
+    return [escapeHtml(nombreTienda(t)), String(arr.length), String(disp), String(ago), String(arr.length - disp - ago)];
+  });
+  const dispTot = ps.filter((p) => p.disponible === true).length;
+  let html = `<p><b>${dispTot}</b> de ${ps.length} equipos${ambitoTexto(f)} figuran como <b>disponibles</b> en la web.</p>`;
+  html += tablaChat([{ h: 'Operador' }, { h: 'Equipos', num: true }, { h: 'Disponibles', num: true }, { h: 'Agotados', num: true }, { h: 'No publicado', num: true }], filas);
+  return html;
+}
+function citaChat() {
+  const op = (DATOS.fuentes || []).map((ft) => ft.nombre).join(', ');
+  return `data.json · equipos en plan renovación · ${op} · lectura ${fFechaCorta(DATOS.generadoEn)}`;
+}
+function respuestaLocal(q) {
+  const nq = norm(q);
+  let intent = detectarIntent(nq);
+  const f = detectarFiltros(nq);
+  const cita = citaChat();
+  const generico = !f.tiendas.length && !f.segmento && f.min == null && f.max == null && !f.tokens.length;
+  if (intent === 'ayuda' || (generico && (intent === 'listar' || intent === 'rango'))) return { html: ayudaChat(), cita: '' };
+  if (f.topN && (intent === 'maximo' || intent === 'minimo' || intent === 'top' || intent === 'listar')) intent = 'top';
+  const hayEntidad = f.tiendas.length || f.segmento || f.min != null || f.max != null;
+  const ps = filtrarPorFiltros(f);
+  if (!ps.length) return hayEntidad
+    ? { html: `<p>${escapeHtml(T('chat.sinResultado'))}</p>`, cita }
+    : { html: ayudaChat(), cita: '' };
+  if (intent === 'top') return { html: topChat(ps, f, /barat|economic|menor|ascend/.test(nq)), cita };
+  if (f.tokens.length && (intent === 'listar' || intent === 'rango')) return { html: busquedaChat(ps, f), cita };
+  switch (intent) {
+    case 'comparar':
+    case 'promedio': return { html: estadisticasChat(ps, f), cita };
+    case 'contar': return { html: contarChat(ps, f), cita };
+    case 'descuento': return { html: descuentoChat(ps, f), cita };
+    case 'disponible': return { html: disponibilidadChat(ps, f), cita };
+    case 'maximo': return { html: extremoChat(ps, f, 'max'), cita };
+    case 'minimo': return { html: extremoChat(ps, f, 'min'), cita };
+    default: return { html: rangoChat(ps, f), cita };
+  }
+}
+
+function burbujaUsuario(q) { return `<div class="chat-msg chat-u"><span class="chat-rol">${escapeHtml(T('chat.etiquetaUsuario'))}</span><div class="chat-bubble">${escapeHtml(q)}</div></div>`; }
+function burbujaAsistente(html, cita) { return `<div class="chat-msg chat-a"><span class="chat-rol">${escapeHtml(T('chat.etiquetaAsistente'))}</span><div class="chat-bubble">${html}${cita ? `<div class="chat-cita">${escapeHtml(T('chat.citaPrefijo'))}: ${escapeHtml(cita)}</div>` : ''}</div></div>`; }
+function burbujaNota(txt) { return `<div class="chat-msg chat-a"><div class="chat-bubble" style="background:#f6eddd;border-color:#dcc39a"><p class="chat-nota">${escapeHtml(txt)}</p></div></div>`; }
+function miniMd(s) {
+  let t = escapeHtml(String(s == null ? '' : s));
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/`([^`]+)`/g, '<code>$1</code>');
+  return t.split(/\r?\n/).map((l) => (/^\s*[-*•]\s+/.test(l) ? '• ' + l.replace(/^\s*[-*•]\s+/, '') : l)).join('<br>');
+}
+function consultarIA(pregunta, endpoint) {
+  const ctrl = new AbortController();
+  const to = setTimeout(() => ctrl.abort(), 60000);
+  const body = JSON.stringify({
+    pregunta,
+    generadoEn: DATOS.generadoEn,
+    resumen: DATOS.resumen,
+    fuentes: (DATOS.fuentes || []).map((ft) => ({ nombre: ft.nombre, url: ft.url, productos: ft.productos })),
+    tramos: TRAMOS.map((t) => t.etq),
+    catalogo: DATOS.productos,
+  });
+  return fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, signal: ctrl.signal })
+    .then((r) => { clearTimeout(to); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then((j) => j.respuesta || j.answer || j.text || j.output || '');
+}
+async function enviarConsulta(q) {
+  q = String(q || '').trim();
+  if (!q) return;
+  const log = $('#chat-log');
+  log.insertAdjacentHTML('beforeend', burbujaUsuario(q));
+  $('#chat-input').value = '';
+  const endpoint = ($('#ia-endpoint') ? $('#ia-endpoint').value.trim() : '');
+  const usarIA = $('#ia-activar') && $('#ia-activar').checked && endpoint;
+  if (usarIA) {
+    log.insertAdjacentHTML('beforeend', `<div class="chat-msg chat-a" id="chat-espera"><span class="chat-rol">${escapeHtml(T('chat.etiquetaAsistente'))}</span><div class="chat-bubble chat-espera">…</div></div>`);
+    log.scrollTop = log.scrollHeight;
+    try {
+      const txt = await consultarIA(q, endpoint);
+      if (!txt) throw new Error('respuesta vacía');
+      $('#chat-espera')?.remove();
+      log.insertAdjacentHTML('beforeend', burbujaAsistente(miniMd(txt), T('chat.iaCita')));
+      log.scrollTop = log.scrollHeight; return;
+    } catch (e) {
+      $('#chat-espera')?.remove();
+      log.insertAdjacentHTML('beforeend', burbujaNota(T('chat.iaError')));
+    }
+  }
+  const r = respuestaLocal(q);
+  log.insertAdjacentHTML('beforeend', burbujaAsistente(r.html, r.cita));
+  log.scrollTop = log.scrollHeight;
+}
+function abrirChat() { const d = $('#dlg-chat'); if (d.showModal) d.showModal(); else d.open = true; setTimeout(() => $('#chat-input')?.focus(), 40); }
+function aplicarTextoChat() {
+  copiarTexto('#consulta-eyebrow', T('chat.eyebrow'));
+  copiarTexto('#h-consulta', T('chat.titulo'));
+  copiarTexto('#consulta-desc', T('chat.desc'));
+  copiarTexto('#btn-abrir-chat', T('chat.abrir'));
+  copiarTexto('#btn-chat-top', T('chat.boton'));
+  copiarTexto('#chat-eyebrow', T('chat.eyebrow'));
+  copiarTexto('#chat-title', T('chat.titulo'));
+  copiarTexto('#btn-chat-cerrar', T('chat.cerrar'));
+  copiarTexto('#chat-intro', resolv(T('chat.intro'), { n: DATOS.resumen.productos, fecha: fFechaCorta(DATOS.generadoEn) }));
+  copiarTexto('#chat-aviso', resolv(T('chat.aviso'), { fecha: fFechaCorta(DATOS.generadoEn) }));
+  copiarTexto('#chat-ia-summary', T('chat.iaSummary'));
+  copiarTexto('#chat-ia-ayuda', T('chat.iaAyuda'));
+  copiarTexto('#lab-ia-endpoint', T('chat.iaEndpointLabel'));
+  copiarTexto('#lab-ia-activar', T('chat.iaActivar'));
+  copiarTexto('#btn-ia-guardar', T('chat.iaGuardar'));
+  copiarTexto('#chat-enviar', T('chat.enviar'));
+  const ci = $('#chat-input'); if (ci) ci.setAttribute('placeholder', T('chat.placeholder'));
+  const ie = $('#ia-endpoint'); if (ie) ie.setAttribute('placeholder', T('chat.iaEndpointPlaceholder'));
+  const ej = Array.isArray(T('chat.ejemplos')) ? T('chat.ejemplos') : [];
+  const chips = ej.map((e) => `<button type="button" class="chat-chip" data-q="${escapeHtml(e)}">${escapeHtml(e)}</button>`).join('');
+  const ce = $('#consulta-ejemplos'); if (ce) ce.innerHTML = chips;
+  const che = $('#chat-ejemplos'); if (che) che.innerHTML = chips;
+  document.querySelectorAll('.chat-chip').forEach((c) => c.addEventListener('click', () => { abrirChat(); enviarConsulta(c.getAttribute('data-q')); }));
+}
+const chatDlg = $('#dlg-chat');
+$('#btn-abrir-chat').addEventListener('click', abrirChat);
+$('#btn-chat-top').addEventListener('click', abrirChat);
+$('#btn-chat-cerrar').addEventListener('click', () => chatDlg.close());
+chatDlg.addEventListener('click', (e) => { if (e.target === chatDlg) chatDlg.close(); });
+$('#chat-form').addEventListener('submit', (e) => { e.preventDefault(); enviarConsulta($('#chat-input').value); });
+(function initChatIA() {
+  try {
+    const ep = localStorage.getItem(CHAT_LS_ENDPOINT) || '';
+    const on = localStorage.getItem(CHAT_LS_ACTIVO) === '1';
+    if (ep) $('#ia-endpoint').value = ep;
+    $('#ia-activar').checked = on;
+    $('#ia-estado').textContent = on && ep ? T('chat.iaActivo') : T('chat.iaInactivo');
+  } catch (e) { /* almacenamiento no disponible */ }
+})();
+$('#btn-ia-guardar').addEventListener('click', () => {
+  const ep = $('#ia-endpoint').value.trim();
+  const on = $('#ia-activar').checked;
+  try { localStorage.setItem(CHAT_LS_ENDPOINT, ep); localStorage.setItem(CHAT_LS_ACTIVO, on ? '1' : '0'); } catch (e) { /* noop */ }
+  $('#ia-estado').textContent = on && ep ? T('chat.iaActivo') : T('chat.iaInactivo');
+});
 
 $('#f-buscar').addEventListener('input', (e) => { F.q = e.target.value; aplicarFiltros(); });
 $('#f-tienda').addEventListener('change', (e) => { F.tienda = e.target.value; aplicarFiltros(); });

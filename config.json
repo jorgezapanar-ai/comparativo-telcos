@@ -307,6 +307,42 @@
       "noLeido": "No se pudo leer data.json. {msg}. Abre el panel por un servidor web local o vuelve a intentarlo.",
       "sinDatos": "El archivo data.json aún no existe o no es accesible. Se genera con {comando}.",
       "reintentar": "Reintentar"
+    },
+    "chat": {
+      "eyebrow": "Consulta asistida",
+      "titulo": "Pregúntale a los datos",
+      "boton": "Consultar",
+      "abrir": "Abrir consultas",
+      "cerrar": "Cerrar",
+      "desc": "Escribe una pregunta en lenguaje natural y el panel la responde calculando sobre la última lectura de precios. Las respuestas son inmediatas y trazables: indican la fuente, el periodo y la fecha de extracción.",
+      "intro": "Se calcula sobre los {n} equipos leídos el {fecha}. Sin proyecciones ni datos externos.",
+      "placeholder": "Ej.: ¿cuál es el iPhone más barato y en qué operador?",
+      "enviar": "Consultar",
+      "ayudaTitulo": "Puedo responder, por ejemplo:",
+      "sinResultado": "No encontré equipos que coincidan con esa consulta.",
+      "etiquetaUsuario": "Tú",
+      "etiquetaAsistente": "Panel",
+      "citaPrefijo": "Fuente",
+      "aviso": "Respuestas calculadas sobre data.json (lectura del {fecha}). Son datos observados de las webs de los operadores; no son proyecciones ni benchmarks externos.",
+      "ejemplos": [
+        "¿Cuál es el equipo más barato y en qué operador?",
+        "Compara la mediana de precio entre Claro, Movistar y Entel",
+        "Top 10 de los equipos más caros",
+        "¿Cuántos modelos de Samsung hay por operador?",
+        "¿Qué Xiaomi tiene precio anterior publicado?",
+        "Precio promedio de Apple en cada operador",
+        "¿Hay iPhone disponibles en Entel?"
+      ],
+      "iaSummary": "Modo IA (opcional)",
+      "iaAyuda": "Opcional: conecta el panel a un modelo de lenguaje mediante un proxy propio. La clave de API vive en el proxy (por ejemplo, un Cloudflare Worker), nunca en este panel. Si no configuras un proxy, el motor local responde sin conexión externa.",
+      "iaEndpointLabel": "URL del proxy IA",
+      "iaEndpointPlaceholder": "https://tu-proxy.ejemplo.workers.dev",
+      "iaActivar": "Usar IA externa (proxy)",
+      "iaGuardar": "Guardar",
+      "iaActivo": "IA externa activa.",
+      "iaInactivo": "Motor local (sin conexión externa).",
+      "iaError": "No pude consultar la IA externa; respondo con el motor local.",
+      "iaCita": "IA externa (proxy)"
     }
   }
 }
